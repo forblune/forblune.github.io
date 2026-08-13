@@ -1,6 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
-  <!-- Placeholder Open Graph share image: swap before publishing -->
-  <rect width="1200" height="630" fill="#151321"/>
-  <text x="60" y="330" font-family="system-ui, sans-serif" font-size="88" font-weight="700" fill="#f4f2fb">Forblune</text>
-  <text x="60" y="400" font-family="system-ui, sans-serif" font-size="34" fill="#a89ee0">Developer Portfolio &amp; Web Studio</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Forblune social sharing card</title>
+  <desc id="desc">Forblune company identity with Korean and English brand promise.</desc>
+  <rect width="1200" height="630" fill="#FAFAF7"/>
+  <path d="M0 0H1200V14H0Z" fill="#3157D5"/>
+  <g transform="translate(76 90) scale(.42)">
+    <path d="M64 416V224A146 146 0 0 1 356 224V416H284V224A74 74 0 0 0 136 224V416Z" fill="#101828"/>
+    <path d="M284 416V224A146 146 0 0 1 576 224V416H504V224A74 74 0 0 0 356 224V416Z" fill="#3157D5"/>
+  </g>
+  <text x="365" y="222" fill="#101828" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="104" font-weight="700" letter-spacing="-4">Forblune</text>
+  <text x="76" y="414" fill="#101828" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="58" font-weight="700" letter-spacing="-2">복잡함을, 작동하는 결과로.</text>
+  <text x="78" y="480" fill="#475467" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="27" font-weight="500">Turn complexity into working results.</text>
+  <text x="78" y="558" fill="#3157D5" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="3">WEB  ·  AI  ·  SYSTEMS  ·  QA</text>
 </svg>
