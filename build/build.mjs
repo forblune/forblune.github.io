@@ -14,6 +14,13 @@ const PAGES = {
     title: "김건희 · Geonhee Kim — 웹을 만들고 조용히 망가진 곳을 찾습니다",
     desc: "만든 것이 지금 열리는지, 그리고 무엇이 아닌지까지 같은 표에 적어 둡니다. 운영 중인 사이트 8곳과 실측 근거로 정리한 문제 7건.",
   },
+  "resume.md": {
+    out: "resume.html",
+    path: "/resume.html",
+    title: "이력서 — 김건희 · Geonhee Kim",
+    desc: "반응형 웹과 소규모 운영 도구. 운영 중인 사이트 8곳과 실측 근거로 정리한 문제 해결 사례.",
+    print: true,
+  },
   "problems.md": {
     out: "problems.html",
     path: "/problems.html",
@@ -23,6 +30,7 @@ const PAGES = {
 };
 
 const CSS = readFileSync(join(ROOT, "build", "style.css"), "utf8");
+const PRINT_CSS = readFileSync(join(ROOT, "build", "print.css"), "utf8");
 
 const page = (body, m) => `<!doctype html>
 <html lang="ko">
@@ -40,7 +48,7 @@ const page = (body, m) => `<!doctype html>
 <meta name="twitter:title" content="${m.title}">
 <meta name="twitter:description" content="${m.desc}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<style>${CSS}</style>
+<style>${CSS}${m.print ? PRINT_CSS : ""}</style>
 </head>
 <body>
 <main>

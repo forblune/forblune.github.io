@@ -51,3 +51,19 @@ done
 ```
 
 기준 문서: 노션 「검색 색인·크롤 기준 v1」 · 「시각디자인 기준 v1」 · 「AI 티 제거 기준」
+
+## 이력서 PDF 다시 만들기
+
+`resume.html` 을 Chrome 헤드리스로 인쇄한다. 손으로 만든 PDF 를 두지 않는다 —
+원고가 바뀌면 그대로 낡기 때문이다.
+
+```bash
+node build/build.mjs
+python3 -m http.server 8793 --bind 127.0.0.1 &
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+  --headless --disable-gpu --no-pdf-header-footer \
+  --print-to-pdf="$PWD/resume.pdf" http://127.0.0.1:8793/resume.html
+```
+
+A4 **1장**에 맞춰져 있다. 학력·경력을 추가하면 2장이 되므로 `build/print.css` 의
+`@media print` 값을 다시 맞출 것.
