@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>해결하는 문제 7건 — 김건희 · Geonhee Kim</title>
+<link rel="canonical" href="https://forblune.github.io/problems.html">
+<meta name="description" content="운영 중인 사이트에서 나온 7건. 숫자는 전부 직접 측정한 값이고, 그중 2건은 제가 낸 사고입니다.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="해결하는 문제 7건 — 김건희 · Geonhee Kim">
+<meta property="og:description" content="운영 중인 사이트에서 나온 7건. 숫자는 전부 직접 측정한 값이고, 그중 2건은 제가 낸 사고입니다.">
+<meta property="og:url" content="https://forblune.github.io/problems.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="해결하는 문제 7건 — 김건희 · Geonhee Kim">
+<meta name="twitter:description" content="운영 중인 사이트에서 나온 7건. 숫자는 전부 직접 측정한 값이고, 그중 2건은 제가 낸 사고입니다.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>:root{--ink:#16181d;--muted:#5b6270;--rule:#e3e6ec;--paper:#fff;--cta:#1f5fe0}
+@media (prefers-color-scheme:dark){:root{--ink:#e8eaee;--muted:#9aa3b2;--rule:#2a2f38;--paper:#14161a;--cta:#7fa8ff}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:17px/1.75 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",Pretendard,"Noto Sans KR",sans-serif;
+  word-break:keep-all;overflow-wrap:break-word;letter-spacing:-.01em}
+main,footer{max-width:760px;margin:0 auto;padding:0 24px}
+main{padding-top:64px;padding-bottom:24px}
+h1{font-size:2rem;line-height:1.25;margin:0 0 16px;letter-spacing:-.03em;text-wrap:balance}
+h2{font-size:1.5rem;line-height:1.3;margin:56px 0 16px;letter-spacing:-.025em;text-wrap:balance}
+h3{font-size:1.125rem;margin:32px 0 8px;letter-spacing:-.02em}
+p{margin:0 0 16px}
+a{color:var(--cta);text-underline-offset:3px}
+hr{border:0;border-top:1px solid var(--rule);margin:48px 0}
+ul,ol{margin:0 0 16px;padding-left:20px}
+li{margin:8px 0}
+blockquote{margin:24px 0;padding:0 0 0 16px;border-left:2px solid var(--rule);color:var(--muted)}
+code{font-size:.9em;background:rgba(127,127,127,.12);padding:2px 5px;border-radius:3px}
+pre{overflow-x:auto;margin:24px 0;padding:16px;background:rgba(127,127,127,.08);border-radius:4px;font-size:.86rem;line-height:1.6}
+pre code{background:none;padding:0}
+.tablewrap{overflow-x:auto;margin:0 0 16px}
+table{width:100%;border-collapse:collapse;font-size:.94rem}
+th,td{text-align:left;vertical-align:top;padding:12px 12px 12px 0;border-bottom:1px solid var(--rule);line-height:1.6}
+/* 프로젝트 이름이 두 줄로 깨지면 안 된다 — 어절 쪼개짐을 측정한다고 써둔 표다 */
+td:first-child,th:first-child{white-space:nowrap;padding-right:20px}
+@media (max-width:520px){td:first-child,th:first-child{white-space:normal}}
+th{font-size:.8rem;color:var(--muted);font-weight:700;letter-spacing:0}
+td:last-child{color:var(--muted)}
+footer{border-top:1px solid var(--rule);margin-top:64px;padding-top:24px;padding-bottom:64px;color:var(--muted);font-size:.88rem}
+@media (max-width:640px){main{padding-top:40px}h1{font-size:1.6rem}h2{font-size:1.3rem;margin-top:44px}}
+</style>
+</head>
+<body>
+<main>
+<p>&lt;!-- 이 파일은 사본이다. 정본은 forblune/forblune 의 docs/PROBLEMS_I_SOLVE.md 이며,      build/sync-problems.mjs 가 거기서 가져온다. 여기를 직접 고치면 다음 동기화에 사라진다. --&gt;</p>
+<h1 id="제가-해결하는-문제">제가 해결하는 문제</h1>
+<p>포트폴리오는 보통 <strong>무엇을 만들었는지</strong>를 보여준다. 그런데 회사가 사는 것은 <strong>어떤 문제가 없어지는지</strong>다. 이 문서는 그 사이를 잇는다.</p>
+<p>아래 사례는 전부 실제로 운영 중인 사이트에서 나왔고, 숫자는 측정값이다. 추정치나 예시가 아니다.</p>
+<hr>
+<h2 id="1-매출로-가는-길이-조용히-끊긴-것을-찾아낸다">1. 매출로 가는 길이 조용히 끊긴 것을 찾아낸다</h2>
+<h3 id="증상-회사가-실제로-하는-말">증상 (회사가 실제로 하는 말)</h3>
+<blockquote>"광고는 돌리는데 문의가 안 들어와요." "예전엔 왔는데 요즘 뜸하네요."</blockquote>
+<h3 id="실제로-일어나는-일">실제로 일어나는 일</h3>
+<p>문의 폼이 죽어도 <strong>화면은 멀쩡해 보인다.</strong> 방문자는 "문제가 발생했습니다"를 보고 그냥 나간다. 아무도 회사에 알려주지 않는다. 광고비는 그대로 나간다.</p>
+<p>2026-08-18, 운영 중인 <code>webcare.forblune.com</code> 에서 실제로 이 일이 있었다. 정적 파일만 배포하는 과정에서 서버 함수가 통째로 빠졌고, 문의 접수 API 가 약 4시간 동안 <strong>405</strong> 를 돌려주고 있었다. 화면은 정상이었다.</p>
+<h3 id="어떻게-찾았나">어떻게 찾았나</h3>
+<p>배포본별로 같은 요청을 던져 경계를 좁혔다.</p>
+<pre><code>2일 전 배포   POST /api/lead → 400   (함수 살아 있음, 잘못된 본문을 거부)
+오늘 배포     POST /api/lead → 405   (함수 없음)</code></pre>
+<p><code>400</code> 과 <code>405</code> 의 차이 하나로 "언제부터, 무엇 때문에"가 확정된다. 로그를 뒤지기 전에 <strong>재현 가능한 경계</strong>를 먼저 만든다.</p>
+<h3 id="조치">조치</h3>
+<ul><li>유실된 서버 함수를 복구하고 배포 경로에 포함</li><li>배포 후 검증을 절차로 고정: <code>POST /api/lead</code> 가 <strong>400 이면 정상, 405 면 배포 실패</strong></li><li>검증은 커스텀 도메인이 아니라 <strong>배포본 URL</strong> 로 한다.</li></ul>
+<p>  도메인은 CDN 캐시 때문에 이미 사라진 것도 한동안 200 을 돌려준다</p>
+<h3 id="회사가-얻는-것">회사가 얻는 것</h3>
+<p>리드 유실을 <strong>시간 단위가 아니라 분 단위로</strong> 줄인다. 그리고 같은 사고가 다시 나면 배포 즉시 걸린다.</p>
+<hr>
+<h2 id="2-알림이-없어서-아무도-모르는-구조를-끝낸다">2. "알림이 없어서 아무도 모르는" 구조를 끝낸다</h2>
+<h3 id="증상">증상</h3>
+<blockquote>"문의가 들어오면 알림이 오죠?"</blockquote>
+<h3 id="실제로-일어나는-일">실제로 일어나는 일</h3>
+<p>위 사고를 고치고 나서 더 큰 것을 발견했다. <strong>알림이 처음부터 없었다.</strong> 문의는 데이터베이스에 저장만 되고, 사람이 직접 조회하기 전까지 아무도 몰랐다. 저장소 전 브랜치를 훑어도 메일 발송 코드가 한 줄도 없었다.</p>
+<p>화면에서는 이렇게 약속하고 있었다.</p>
+<blockquote>"담당자가 빠른 시일 내 연락드리겠습니다."</blockquote>
+<p>문의가 들어와도 며칠 방치될 수 있는 구조였다. 광고를 켜는 순간 바로 손실이 된다.</p>
+<h3 id="조치">조치</h3>
+<p>메일 알림을 붙이되, <strong>알림이 문의를 잡아먹지 않도록</strong> 설계했다.</p>
+<ul><li>알림은 <strong>저장이 끝난 뒤에</strong> 보낸다. 메일이 실패해도 문의는 이미 저장돼 있다</li><li>응답을 붙잡지 않는다. 사용자는 메일 발송을 기다리지 않는다</li><li>실패는 <strong>반드시 로그에 남긴다.</strong> 조용히 죽는 알림이 제일 나쁘다</li><li>받은 메일에 <strong>그대로 답장하면 문의자에게 간다</strong></li></ul>
+<p>이 설계는 곧바로 값을 했다. 첫 설정에서 API 키가 잘못 들어가 발송이 실패했는데, <strong>문의는 정상 저장됐고</strong> 로그에 <code>lead_notify_failed &lt;문의ID&gt; 401</code> 이 남아 원인이 5분 만에 확정됐다.</p>
+<h3 id="회사가-얻는-것">회사가 얻는 것</h3>
+<p>장애를 <strong>늦게 아는 비용</strong>이 장애 자체보다 크다. 그 시간을 없앤다.</p>
+<hr>
+<h2 id="3-어느-게-최신인지-모르겠는-상태를-끝낸다">3. "어느 게 최신인지 모르겠는" 상태를 끝낸다</h2>
+<h3 id="증상">증상</h3>
+<blockquote>"그 파일 어디 있죠?" "고쳤는데 배포하니까 예전 걸로 돌아갔어요."</blockquote>
+<h3 id="실제로-일어나는-일">실제로 일어나는 일</h3>
+<p>운영 중인 사이트의 소스가 <strong>git 어디에도 없었다.</strong></p>
+<p>로컬에 후보가 8곳 있었다 — 저장소 본체, 빌드 산출물, <code>v3</code>, <code>v5</code>, <code>v6</code>, <code>v6 2</code>, <code>v6-v2</code>, 복구본. 라이브와 해시를 전부 대조했다.</p>
+<pre><code>후보 8곳  →  라이브와 일치: 0곳</code></pre>
+<p>Git 연동 없이 직접 업로드하는 방식이라 이력이 남지 않아 생긴 공백이었다. 이 상태에서는 <strong>누가 무엇을 고쳐도 다음 배포에 사라질 수 있다.</strong> 실제로 과거에 구버전이 최종본을 덮은 사고가 있었다.</p>
+<h3 id="조치">조치</h3>
+<ul><li>라이브 산출물을 그대로 내려받아 해시로 검증하고 <strong>저장소에 정본으로 고정</strong></li><li>정본 규칙·배포 명령·배포 전후 검증 절차를 같은 폴더 README 에 기록</li><li>배포 파이프라인을 <strong>단방향으로 못박고 스크립트화</strong></li></ul>
+<p>배포 스크립트에 넣은 안전장치:</p>
+<div class="tablewrap"><table><thead><tr><th>장치</th><th>막는 사고</th></tr></thead><tbody><tr><td>기본이 미리보기, <code>--apply</code> 필요</td><td>의도치 않은 즉시 반영</td></tr><tr><td>대상 저장소 origin 확인</td><td>엉뚱한 저장소 덮어쓰기</td></tr><tr><td>대상에 미커밋 변경 있으면 중단</td><td>남의 작업 날리기</td></tr><tr><td>빌드 실패 시 중단</td><td>낡은 산출물 배포</td></tr><tr><td><strong>삭제 파일 개수 표시 + <code>yes</code> 입력 요구</strong></td><td>대량 삭제</td></tr></tbody></table></div>
+<p>마지막 항목은 실제 사고에서 나왔다. 같은 날 두 저장소가 양방향으로 갈라진 것을 모르고 동기화를 돌릴 뻔했고, <strong>파일 9개가 지워질 뻔했다.</strong></p>
+<h3 id="회사가-얻는-것">회사가 얻는 것</h3>
+<p>인수인계가 가능해진다. 담당자가 바뀌어도 "정본이 어디냐"로 시작하지 않는다.</p>
+<hr>
+<h2 id="4-크롤로-만든-사본은-사이트의-사본이-아니다">4. 크롤로 만든 사본은 사이트의 사본이 아니다</h2>
+<h3 id="증상">증상</h3>
+<blockquote>"그대로 옮겼는데 왜 안 되죠?"</blockquote>
+<h3 id="실제로-일어나는-일">실제로 일어나는 일</h3>
+<p>사이트를 크롤해서 만든 사본에는 <strong>보이지 않는 것들이 빠진다.</strong></p>
+<ul><li>서버 코드 (위 1번 사고의 원인)</li><li><code>og:image</code> 처럼 <strong>메타태그에만 있는 자산</strong> — 링크가 없어 크롤에 안 잡힌다</li><li><code>sitemap.xml</code> 에만 있는 미링크 페이지</li><li>CSS <code>url()</code> 안의 파일</li><li><code>robots.txt</code> <code>favicon.ico</code> <code>site.webmanifest</code> 같은 관례 파일</li></ul>
+<p>같은 날 이 방식으로 <strong>511KB짜리 <code>og:image</code> 를 지웠다.</strong> 8개 페이지의 공유 미리보기 이미지였다. 더 나쁜 건 <strong>도메인이 200 을 돌려주고 있었다는 것</strong> — CDN 캐시 때문이었다. 배포본 URL 로 확인해야 404 가 보였다.</p>
+<h3 id="조치">조치</h3>
+<p>이전 배포본에서 파일을 복원하고, 배포 전 점검 목록과 <strong>"검증은 도메인이 아니라 배포본 URL 로"</strong> 를 문서에 고정했다.</p>
+<h3 id="회사가-얻는-것">회사가 얻는 것</h3>
+<p>이전·리뉴얼·업체 교체 과정에서 <strong>조용히 사라지는 것</strong>을 막는다. 사라진 줄도 모르는 자산이 가장 비싸다.</p>
+<hr>
+<h2 id="5-남의-서비스-장애가-우리-장애가-되지-않게-한다">5. 남의 서비스 장애가 우리 장애가 되지 않게 한다</h2>
+<h3 id="증상">증상</h3>
+<blockquote>"사진이 깨져 보여요. 어제는 됐는데요."</blockquote>
+<h3 id="실제로-일어나는-일">실제로 일어나는 일</h3>
+<p>디자인 쇼케이스 사이트의 사진이 전부 외부 무료 이미지 서비스를 <strong>직접 링크</strong>하고 있었다. 그 서비스가 장애를 일으키자 절반 이상이 회색 박스가 됐다. 우리 코드는 아무것도 바뀌지 않았는데 사이트가 망가진 것이다.</p>
+<pre><code>외부 핫링크   243건 (24개 페이지)  →  0건
+자체 호스팅   234개 파일 / 고유 사진 217장 / 전부 CC0 (상업적 사용 가능)
+외부 이미지 의존   0</code></pre>
+<h3 id="선별에서-걸러낸-함정">선별에서 걸러낸 함정</h3>
+<p>무료 이미지 API 는 그냥 받아 쓰면 안 된다. 실제로 두 가지에 걸렸다.</p>
+<ul><li><strong>평면 스캔본</strong> — 배경만 있는 이미지가 화면에서 단색 회색 박스로 읽힌다.</li></ul>
+<p>  "사진이 안 채워진 것처럼 보인다"는 지적의 실제 원인이었다</p>
+<ul><li><strong>박물관 소장품 촬영본</strong> — 사진 카테고리를 통과하지만 웹사이트 예시에는</li></ul>
+<p>  전혀 맞지 않는다. 촬영기관 이름으로 걸러냈다</p>
+<h3 id="회사가-얻는-것">회사가 얻는 것</h3>
+<p><strong>우리가 통제할 수 없는 것에 사이트를 걸지 않는다.</strong> 공짜 외부 자원은 공짜인 만큼 보장이 없다.</p>
+<hr>
+<h2 id="6-ai가-만든-티-를-만드는-실제-원인을-잡는다">6. "AI가 만든 티"를 만드는 실제 원인을 잡는다</h2>
+<h3 id="증상">증상</h3>
+<blockquote>"뭔가 어색한데 뭐가 문제인지 모르겠어요." "성의 없어 보인다는 말을 들었어요."</blockquote>
+<h3 id="실제로-일어나는-일">실제로 일어나는 일</h3>
+<p>대개 콘텐츠가 아니라 <strong>기본기</strong>다. 가장 흔한 것이 한글 어절이 단어 중간에서 끊기는 문제다. 좁은 화면일수록 심해진다.</p>
+<blockquote>저희는 사이트를 점검하고 개선&lt;br&gt;합니다</blockquote>
+<p>이걸 보면 읽는 사람은 내용을 판단하기 전에 <strong>"검수가 안 됐구나"</strong> 를 먼저 느낀다. 그리고 그 인상은 문의 여부로 이어진다.</p>
+<p>원인은 한 줄이다. 한글은 단어 단위 줄바꿈이 기본이 아니다.</p>
+<pre><code>word-break: keep-all;        /* 어절 단위로만 끊는다 */
+overflow-wrap: break-word;   /* URL 처럼 끊을 수 없는 긴 토큰만 예외 */</code></pre>
+<p><code>overflow-wrap: anywhere</code> 를 쓰면 <code>keep-all</code> 이 무시되어 도로 끊긴다. 이런 것은 알아야 보인다.</p>
+<p>운영 중인 4개 사이트 전부에서 이 문제를 찾아 고쳤다. 쇼케이스만 <strong>25개 페이지</strong> 전부에 적용했다.</p>
+<h3 id="같이-잡은-것들">같이 잡은 것들</h3>
+<div class="tablewrap"><table><thead><tr><th>결함</th><th>왜 문제인가</th></tr></thead><tbody><tr><td>필수 항목인데 화면에 표시가 없음</td><td>사용자가 이유를 모른 채 실패하고 이탈한다</td></tr><tr><td>모든 오류가 문구 하나로 뭉개짐</td><td>무엇이 잘못됐는지 아무도 모른다</td></tr><tr><td>시스템 다크 모드에서 의도와 다른 색</td><td>브랜드가 무너진다</td></tr><tr><td>입력칸이 빈 흰 상자</td><td>무엇을 넣어야 할지 모른다</td></tr></tbody></table></div>
+<p>필수 항목 문제는 특히 실제 손실로 이어지고 있었다. 서버는 필수로 검사하는데 화면에는 표시가 없어서, 그 항목을 안 채운 사용자는 <strong>"문제가 발생했습니다"만 보고 이유를 알 수 없었다.</strong> 제출 전에 잡아서 무엇을 채워야 하는지 알려주도록 고쳤다.</p>
+<h3 id="회사가-얻는-것">회사가 얻는 것</h3>
+<p><strong>전환율.</strong> 내용이 좋아도 검수 안 된 인상이면 문의하지 않는다.</p>
+<hr>
+<h2 id="7-기본적인-것이-빠져-있는지-확인한다">7. 기본적인 것이 빠져 있는지 확인한다</h2>
+<h3 id="증상">증상</h3>
+<blockquote>"명함에 적은 주소가 안 열린다는데요?"</blockquote>
+<h3 id="실제로-일어나는-일">실제로 일어나는 일</h3>
+<p>서브도메인 9개는 전부 살아 있는데 <strong>루트 도메인만 죽어 있었다.</strong> DNS 에 웹 레코드가 아예 없어서 접속 자체가 안 됐다.</p>
+<p>메일은 정상이라 아무도 눈치채지 못했다. 명함·메일 서명·검색 결과에서 회사 주소를 치면 안 열리는 상태가 계속되고 있었다.</p>
+<h3 id="조치">조치</h3>
+<p>루트와 <code>www</code> 를 대표 사이트로 <strong>301 영구 이동</strong>시키되, 경로와 쿼리를 보존했다.</p>
+<pre><code>forblune.com/            → portfolio.forblune.com/
+www.forblune.com/        → portfolio.forblune.com/
+forblune.com/a/b?x=1     → portfolio.forblune.com/a/b?x=1</code></pre>
+<h3 id="여기서-중요한-판단">여기서 중요한 판단</h3>
+<p>메일 발송용 도메인 인증을 붙일 때, <strong>루트가 아니라 서브도메인을 썼다.</strong></p>
+<p>루트에는 이미 Google Workspace 의 메일 설정(MX·SPF)이 걸려 있었다. 루트 SPF 에 새 발송 서비스를 끼워 넣으면 <strong>지금 쓰는 회사 메일 수신이 깨질 수 있다.</strong> 서브도메인으로 분리하면 그 위험이 없다.</p>
+<p>작업 후 메일 레코드(MX·SPF·DMARC) 무결성을 확인했다.</p>
+<h3 id="회사가-얻는-것">회사가 얻는 것</h3>
+<p><strong>고치러 갔다가 다른 걸 부수지 않는다.</strong> 이게 운영 중인 시스템을 만지는 일의 핵심이다.</p>
+<hr>
+<h2 id="정리-한-줄로">정리 — 한 줄로</h2>
+<div class="tablewrap"><table><thead><tr><th>회사가 겪는 것</th><th>제가 하는 것</th></tr></thead><tbody><tr><td>문의가 안 들어오는데 이유를 모름</td><td>끊긴 경로를 재현 가능한 경계로 찾아 복구하고, 재발을 배포 절차로 막음</td></tr><tr><td>장애를 뒤늦게 앎</td><td>실패가 조용히 죽지 않는 알림·로그 구조를 넣음</td></tr><tr><td>최신본이 어디 있는지 모름</td><td>정본을 확정해 저장소에 고정하고 배포를 단방향으로 못박음</td></tr><tr><td>이전·리뉴얼에서 뭔가 사라짐</td><td>크롤에 안 잡히는 자산까지 포함한 점검 절차</td></tr><tr><td>남의 서비스 장애로 우리가 멈춤</td><td>외부 의존을 걷어내고 통제 가능한 자원으로 대체</td></tr><tr><td>"AI가 만든 티" 라는 말을 들음</td><td>신뢰를 깎는 기본기 결함을 찾아 고침</td></tr><tr><td>기본적인 게 빠져 있음</td><td>살아 있는 것을 부수지 않고 빠진 것만 채움</td></tr></tbody></table></div>
+<hr>
+<h2 id="일하는-방식">일하는 방식</h2>
+<p><strong>추측으로 고치지 않는다.</strong> 원인을 확정하는 재현 가능한 경계를 먼저 만든다. <code>400</code> 인가 <code>405</code> 인가, 해시가 같은가 다른가 — 이런 것으로 확정한 뒤에 손을 댄다.</p>
+<p><strong>고친 것은 반드시 확인한다.</strong> 코드가 컴파일되는 것과 사용자에게 동작하는 것은 다르다. 실제 화면에서 끝까지 제출해보고, 데이터베이스에 들어갔는지까지 본다.</p>
+<p><strong>같은 사고가 두 번 나지 않게 만든다.</strong> 고치고 끝내지 않고, 왜 그랬는지와 어떻게 확인하는지를 저장소에 남긴다. 다음 사람이 나일 필요가 없어야 한다.</p>
+<p><strong>내 실수도 그대로 적는다.</strong> 위 사례 중 1·4번은 <strong>제가 만든 사고</strong>다. 찾아내고, 원인을 규명하고, 재발 방지까지 하고, 기록으로 남겼다. 사고를 안 내는 사람은 없다. 사고를 숨기지 않고 시스템으로 막는 사람이 필요할 뿐이다.</p>
+<hr>
+<p>&lt;sub&gt;사례의 모든 숫자는 2026-08-18 실측값이다. 검증 명령과 근거는 각 저장소의 커밋 메시지와 <code>docs/</code> 에 남아 있다.&lt;/sub&gt;</p>
+</main>
+<footer>
+  <p>2026-08-18 작성. 프레임워크 없이 마크다운에서 만들었고, 이 사이트의 소스는
+  <a href="https://github.com/forblune/forblune.github.io">같은 저장소</a>에 있습니다.</p>
+</footer>
+</body>
+</html>

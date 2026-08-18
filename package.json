@@ -1,0 +1,9 @@
+{
+  "name": "forblune-github-io",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync": "node build/sync-problems.mjs",
+    "build": "npm run sync && node build/build.mjs"
+  }
+}

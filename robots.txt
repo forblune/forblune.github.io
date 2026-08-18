@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://forblune.github.io/sitemap.xml
