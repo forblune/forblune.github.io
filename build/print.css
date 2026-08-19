@@ -27,3 +27,5 @@ hr{margin:28px 0}
 }
 
 @media print{p,li{margin-bottom:4pt}ul,ol{margin-bottom:5pt;padding-left:15pt}li{margin-top:0}}
+
+@media print{table td:first-child{width:22%;white-space:nowrap}}
