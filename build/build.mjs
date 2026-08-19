@@ -21,6 +21,12 @@ const PAGES = {
     desc: "반응형 웹과 소규모 운영 도구. 운영 중인 사이트 8곳과 실측 근거로 정리한 문제 해결 사례.",
     print: true,
   },
+  "checks.md": {
+    out: "checks.html",
+    path: "/checks.html",
+    title: "판별 절차 — 김건희 · Geonhee Kim",
+    desc: "400과 405로 경계 만들기, 해시로 정본 판정하기, 어절 쪼개짐 측정하기. 각 절차가 확정한 것과 못 잡는 것까지.",
+  },
   "problems.md": {
     out: "problems.html",
     path: "/problems.html",

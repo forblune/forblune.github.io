@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>판별 절차 — 김건희 · Geonhee Kim</title>
+<link rel="canonical" href="https://forblune.github.io/checks.html">
+<meta name="description" content="400과 405로 경계 만들기, 해시로 정본 판정하기, 어절 쪼개짐 측정하기. 각 절차가 확정한 것과 못 잡는 것까지.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="판별 절차 — 김건희 · Geonhee Kim">
+<meta property="og:description" content="400과 405로 경계 만들기, 해시로 정본 판정하기, 어절 쪼개짐 측정하기. 각 절차가 확정한 것과 못 잡는 것까지.">
+<meta property="og:url" content="https://forblune.github.io/checks.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="판별 절차 — 김건희 · Geonhee Kim">
+<meta name="twitter:description" content="400과 405로 경계 만들기, 해시로 정본 판정하기, 어절 쪼개짐 측정하기. 각 절차가 확정한 것과 못 잡는 것까지.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>:root{--ink:#16181d;--muted:#5b6270;--rule:#e3e6ec;--paper:#fff;--cta:#1f5fe0;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--ink:#e8eaee;--muted:#9aa3b2;--rule:#2a2f38;--paper:#14161a;--cta:#7fa8ff}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:17px/1.7 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif;
+  word-break:keep-all;overflow-wrap:break-word;letter-spacing:-.012em}
+
+/* 산문 720px · 표/코드 896px. 두 폭이 같은 중심축을 쓰고,
+   넓은 트랙은 표와 코드에만 준다 — 산문을 넓히면 왼쪽 모서리가 어긋나 사고로 읽힌다. */
+main{max-width:none;margin:0;padding:96px 0 0}
+main > :not(section){max-width:768px;margin:0 auto;padding:0 24px} /* 404 는 md() 를 안 거친다 */
+section{--text:720px;--wide:88px;display:grid;
+  grid-template-columns:
+    [full-start] minmax(24px,1fr)
+    [wide-start] minmax(0,var(--wide))
+    [text-start] min(var(--text),100% - 48px)
+    [text-end] minmax(0,var(--wide))
+    [wide-end] minmax(24px,1fr) [full-end];}
+section > *{grid-column:text;margin:0}
+section > .tablewrap,section > pre{grid-column:wide}
+
+/* 근접성 사다리 8·12·24·48·112 — 전부 4의 배수.
+   그리드 아이템은 마진이 상쇄되지 않으므로 인접 규칙으로만 준다. 순서가 곧 규칙이다:
+   `*+h3`(48) 이 `h2+*`(12) 보다 앞서므로 h2 다음의 h3 는 12px 로 묶인다. */
+section > * + *{margin-top:24px}
+section > * + h3{margin-top:48px}
+section > h2 + *{margin-top:12px}
+section > h3 + *{margin-top:8px}
+section + section{margin-top:112px}
+
+/* 크기 56/32/19/17/15/14 (3.29배) · 무게 800/700/600/400 */
+h1{font-size:clamp(40px,5.6vw,56px);line-height:1.08;font-weight:800;letter-spacing:-.04em;text-wrap:balance}
+h2{position:relative;font-size:32px;line-height:1.25;font-weight:700;letter-spacing:-.03em;text-wrap:balance}
+h3{font-size:15px;line-height:1.4;font-weight:700;letter-spacing:0;color:var(--muted)}
+strong{font-weight:600}                 /* 지금은 strong=h2=h3=700 이라 강조가 제목과 같은 무게다 */
+h2 strong,h3 strong{font-weight:inherit}
+
+/* 번호 붙은 절의 숫자를 좌측 여백에 매단다. 배경·테두리·점·포인트색 전부 없음. */
+h2 .idx{position:absolute;right:100%;margin-right:16px;top:2px; /* 2px = 광학 보정 */
+  font-size:24px;font-weight:700;line-height:1;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums;color:var(--muted)}
+@media (max-width:944px){               /* wide 트랙이 88px 를 못 채우는 구간 */
+  h2 .idx{position:static;margin-right:0;font-size:inherit;color:inherit;letter-spacing:inherit}
+  h2 .idx::after{content:". "}
+}
+
+a{color:var(--cta);text-underline-offset:3px;text-decoration-thickness:1px}
+ul,ol{padding-left:20px}
+li{margin:0 0 8px}
+li:last-child{margin-bottom:0}
+/* problems 에 7번 반복되는 2px 세로선을 없앤다. 고객 목소리를 muted 로 흐리지 않는다. */
+blockquote{padding-left:24px;border:0;font-size:19px;line-height:1.55;letter-spacing:-.025em;color:var(--ink)}
+sub{font-size:15px;line-height:1.6;color:var(--muted);vertical-align:baseline}
+
+/* 코드 = 두 번째 서체. 상태코드가 이 사이트의 증거인데 지금은 본문 산세리프로 나온다.
+   시스템 모노라 웹폰트는 여전히 0개. <code>/<pre> 밖에서는 절대 쓰지 않는다. */
+code,pre{font-family:var(--mono);letter-spacing:0;font-variant-numeric:tabular-nums}
+code{font-size:.88em;background:rgba(127,127,127,.12);padding:2px 4px;border-radius:3px}
+pre{overflow-x:auto;padding:24px;background:rgba(127,127,127,.06);border-radius:2px;font-size:15px;line-height:1.7}
+pre code{background:none;padding:0;font-size:inherit}
+
+/* 표를 주인공으로. 본문(17px)보다 작지 않게, 산문보다 176px 넓게.
+   행별 실선을 없애고 머리 1줄·바닥 1줄만 남긴다 — 반복 단위 안 실선 0.
+   열 폭은 지정하지 않는다: 자동 레이아웃이 「2024.2」를 57px, 문장 열을 넓게 알아서 잡는다. */
+.tablewrap{overflow-x:auto}             /* margin 을 쓰면 (0,1,0) 이 section>*+* 를 이겨 표가 0px 로 붙는다 */
+table{width:100%;border-collapse:collapse;font-size:17px;
+  font-variant-numeric:tabular-nums;border-bottom:1px solid var(--rule)}
+thead th{font-size:14px;font-weight:700;color:var(--muted);letter-spacing:0;
+  text-align:left;padding:0 20px 12px 0;border-bottom:1px solid var(--ink)}
+td{text-align:left;vertical-align:top;padding:20px 20px 20px 0;line-height:1.5;border:0}
+td:first-child{font-weight:600}
+td strong{font-weight:700}              /* 크기는 올리지 않는다 — 셀 전체가 strong 인 칸이 여럿이다 */
+td code{font-size:.82em}
+thead:has(th:empty){display:none}                        /* resume.md 의 `| | |` */
+table:has(thead th:empty){border-top:1px solid var(--rule)}
+/* td:last-child{color:var(--muted)} 는 삭제했다 — 이 규칙이 「개편 후」와
+   「제가 하는 것」, 즉 이 사이트의 증거 열만 정확히 흐리고 있었다. */
+
+footer{max-width:768px;margin:112px auto 0;padding:24px 24px 96px;
+  border-top:1px solid var(--rule);color:var(--muted);font-size:15px;line-height:1.6}
+footer p{margin:0}
+
+@media (max-width:640px){
+  main{padding-top:48px}
+  section + section{margin-top:72px}
+  section > * + h3{margin-top:40px}
+  h2{font-size:26px}
+  blockquote{font-size:18px}
+  table{font-size:16px}
+  td{padding:20px 16px 20px 0}          /* 세로 20 유지: 16 이면 32/24=1.33 으로 근접성 하한 붕괴 */
+  thead th{padding:0 16px 12px 0}
+  footer{margin-top:72px;padding-bottom:64px}
+}</style>
+</head>
+<body>
+<main>
+<section>
+<h1 id="판별-절차">판별 절차</h1>
+<p>형용사 대신 <strong>남이 따라 할 수 있는 절차</strong>로 적었습니다. 각 절차마다 그것으로 실제로 무엇을 확정했는지, 그리고 그 절차가 못 잡는 것이 무엇인지 같이 적습니다.</p>
+</section>
+<section>
+<h2 id="1-400과-405로-경계를-만든다"><span class="idx">1</span>400과 405로 경계를 만든다</h2>
+<h3 id="언제-쓰나">언제 쓰나</h3>
+<p>"어제까진 됐는데 오늘 안 돼요." 원인 후보가 여러 개일 때, 로그를 뒤지기 전에 <strong>범위를 반으로 자를 때</strong> 씁니다.</p>
+<h3 id="절차">절차</h3>
+<p>서버가 돌려주는 상태코드는 "실패했다"만 말하지 않습니다. <strong>어디까지 도달했는지</strong>를 말합니다.</p>
+<pre><code>curl -s -o /dev/null -w '%{http_code}\n' \
+  -X POST https://&lt;host&gt;/api/&lt;경로&gt; \
+  -H 'Content-Type: application/json' -d '{}'</code></pre>
+<div class="tablewrap"><table><thead><tr><th>응답</th><th>뜻</th><th>다음에 볼 곳</th></tr></thead><tbody><tr><td><code>400</code></td><td>경로도 있고 핸들러도 돌았다. 본문이 규격에 안 맞아 거절된 것</td><td>요청 본문·검증 규칙</td></tr><tr><td><code>405</code></td><td><strong>경로는 있는데 그 메서드가 없다.</strong> 핸들러가 배포에서 빠졌다</td><td>배포 산출물·번들 설정</td></tr><tr><td><code>404</code></td><td>경로 자체가 없다</td><td>라우팅·파일 배치</td></tr><tr><td><code>200</code></td><td>도달했고 처리됐다. 그런데도 결과가 없으면 그다음 단계 문제</td><td>저장·알림</td></tr></tbody></table></div>
+<p>빈 본문 <code>{}</code> 을 일부러 보냅니다. <strong>정상이라면 반드시 거절당해야 하므로</strong>, 거절 방식이 곧 진단이 됩니다.</p>
+<h3 id="이걸로-확정한-것">이걸로 확정한 것</h3>
+<p>운영 중인 사이트에서 문의가 안 들어온다는 신고가 있었습니다. 화면은 멀쩡했습니다. 두 배포본에 같은 요청을 던졌습니다.</p>
+<pre><code>2일 전 배포   POST /api/lead → 400   핸들러 살아 있음
+오늘 배포     POST /api/lead → 405   핸들러 없음</code></pre>
+<p>두 줄로 "언제부터, 무엇 때문에"가 확정됐습니다. 정적 파일만 배포하는 과정에서 서버 함수가 통째로 빠진 것이었고, <strong>약 4시간</strong> 동안 접수가 끊겨 있었습니다. 이후 배포 검증을 절차로 고정했습니다 — <code>400</code>이면 정상, <code>405</code>면 배포 실패.</p>
+<h3 id="이-절차가-못-잡는-것">이 절차가 못 잡는 것</h3>
+<ul><li><strong>커스텀 도메인으로 재면 거짓말을 합니다.</strong> CDN 캐시 때문에 이미 사라진 것도 한동안 <code>200</code>을 줍니다. 배포본 URL로 재거나 20~30초 뒤에 다시 봐야 합니다. 하루에 네 번 속은 적이 있습니다.</li><li><code>200</code>이 성공을 뜻하지 않습니다. SPA 폴백이 켜져 있으면 <strong>없는 경로도 200</strong>입니다(soft 404). <code>/sitemap.xml</code> 이 200인데 내용이 HTML인 경우가 여기서 나옵니다.</li><li>상태코드는 "도달했다"까지만 말합니다. 저장이나 알림이 조용히 실패하는 건 별도로 봐야 합니다.</li></ul>
+</section>
+<section>
+<h2 id="2-해시로-정본을-판정한다"><span class="idx">2</span>해시로 정본을 판정한다</h2>
+<h3 id="언제-쓰나">언제 쓰나</h3>
+<p>"그 파일 어디 있죠?" / "고쳤는데 배포하니 예전 걸로 돌아갔어요." 사본이 여러 개일 때, <strong>어느 것이 지금 라이브인지</strong> 눈으로는 알 수 없습니다.</p>
+<h3 id="절차">절차</h3>
+<p>라이브에서 받은 것과 로컬 후보들을 같은 방식으로 해시 냅니다. 눈으로 비교하지 않습니다.</p>
+<pre><code>LIVE=$(curl -s "https://&lt;host&gt;/?cb=$RANDOM" | shasum -a 256 | cut -d' ' -f1)
+for f in &lt;후보1&gt; &lt;후보2&gt; &lt;후보3&gt;; do
+  printf '%-40s %s\n' "$f" \
+    "$([ "$(shasum -a 256 "$f" | cut -d' ' -f1)" = "$LIVE" ] &amp;&amp; echo 일치 || echo 다름)"
+done</code></pre>
+<p>캐시 버스터를 꼭 붙입니다. 안 붙이면 <strong>캐시된 옛 응답과 옛 사본이 일치</strong>해 엉뚱한 결론이 납니다.</p>
+<h3 id="이걸로-확정한-것">이걸로 확정한 것</h3>
+<p>운영 중인 사이트의 소스가 git 어디에도 없었습니다. 로컬 후보 8곳을 라이브와 대조했습니다.</p>
+<pre><code>후보 8곳  →  라이브와 일치: 0곳</code></pre>
+<p><strong>어느 것도 정본이 아니었습니다.</strong> git 연동 없이 직접 업로드하는 방식이라 이력이 남지 않아 생긴 공백이었습니다. 이 상태에서는 누가 무엇을 고쳐도 다음 배포에 사라질 수 있습니다. 라이브 산출물을 해시로 검증해 저장소에 정본으로 고정하고, 배포를 단방향 스크립트로 못박았습니다.</p>
+<h3 id="이-절차가-못-잡는-것">이 절차가 못 잡는 것</h3>
+<ul><li><strong>크롤로 만든 사본은 사이트의 사본이 아닙니다.</strong> 해시가 같아도 서버 코드, <code>og:image</code> 처럼 메타태그에만 있는 자산, <code>sitemap.xml</code> 에만 있는 미링크 페이지, CSS <code>url()</code> 안의 파일은 빠집니다.</li><li>응답에 타임스탬프나 nonce 가 섞이면 매번 해시가 달라집니다. 그 필드를 지우고 비교해야 합니다.</li><li>"일치하는 게 없다"까지만 알려줍니다. <strong>어느 것을 정본으로 삼을지는 사람이 정해야 합니다.</strong></li></ul>
+</section>
+<section>
+<h2 id="3-어절-쪼개짐을-센다"><span class="idx">3</span>어절 쪼개짐을 센다</h2>
+<h3 id="언제-쓰나">언제 쓰나</h3>
+<p>"뭔가 어색한데 뭐가 문제인지 모르겠어요." 대개 내용이 아니라 기본기입니다. 가장 흔한 것이 <strong>한글이 단어 중간에서 줄바꿈되는 것</strong>입니다.</p>
+<blockquote>저희는 사이트를 점검하고 개선 합니다</blockquote>
+<p>읽는 사람은 내용을 판단하기 전에 <strong>"검수가 안 됐구나"</strong> 를 먼저 느낍니다.</p>
+<h3 id="왜-생기나">왜 생기나</h3>
+<p>브라우저 기본값 <code>word-break: normal</code> 은 <strong>CJK를 음절 단위로 끊어도 되는 것으로 취급</strong>합니다. 라틴 문자는 공백에서만 끊기지만 한글은 아무 글자 사이에서나 끊깁니다.</p>
+<pre><code>body { word-break: keep-all; overflow-wrap: break-word; }</code></pre>
+<p><code>overflow-wrap: break-word</code> 는 URL 처럼 끊을 수 없는 긴 토큰이 넘칠 때만 쓰이는 안전장치입니다. <strong><code>anywhere</code> 를 쓰면 <code>keep-all</code> 을 무시하고 도로 끊깁니다.</strong></p>
+<h3 id="절차">절차</h3>
+<p>눈으로 세지 않습니다. <code>Intl.Segmenter</code> 로 어절을 자르고, 각 어절의 <code>getClientRects()</code> 가 두 줄에 걸치는지 봅니다. 걸치면 쪼개진 것입니다.</p>
+<pre><code>(() =&gt; {
+  const seg = new Intl.Segmenter('ko', { granularity: 'word' });
+  let checked = 0, broken = [];
+  const tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  let n;
+  while ((n = tw.nextNode())) {
+    const t = n.nodeValue;
+    if (!t || !/[가-힣]/.test(t)) continue;
+    const p = n.parentElement;
+    if (!p || !p.offsetParent) continue;
+    const r0 = p.getBoundingClientRect();
+    if (r0.right &lt; 0 || r0.width &lt;= 1) continue;      // 화면 밖·허니팟 제외
+    for (const s of seg.segment(t)) {
+      if (!s.isWordLike || !/[가-힣]/.test(s.segment) || s.segment.length &lt; 2) continue;
+      checked++;
+      const r = document.createRange();
+      r.setStart(n, s.index);
+      r.setEnd(n, s.index + s.segment.length);
+      if (r.getClientRects().length &gt; 1) broken.push(s.segment);
+    }
+  }
+  return { checked, broken };
+})()</code></pre>
+<p><strong>390 · 768 · 1280 · 1440px 네 폭에서 각각 0</strong> 이어야 통과입니다. 좁은 화면일수록 잘 드러납니다.</p>
+<h3 id="이걸로-확정한-것">이걸로 확정한 것</h3>
+<p>운영 중인 사이트 네 곳과 예시 25페이지에서 찾아 전부 0건으로 만들었습니다. <code>keep-all</code> 선언이 있는 페이지는 0건, 없는 페이지는 반드시 발생했습니다 — 예외가 없었습니다.</p>
+<h3 id="이-절차가-못-잡는-것">이 절차가 못 잡는 것</h3>
+<ul><li><strong>화면 밖 요소를 세면 오탐이 납니다.</strong> 봇 트랩(허니팟)은 <code>left:-9999px</code>, 폭 1px 로 숨겨 두는데 1px 상자 안에서는 당연히 줄이 바뀝니다. 위 코드의 <code>r0.right &lt; 0 || r0.width &lt;= 1</code> 이 그걸 거릅니다. 이 조건이 없어서 "쪼개짐 2건"으로 잘못 보고한 적이 있습니다.</li><li><strong>정적 스캔으로 못 잡는 것이 있습니다.</strong> 영문 페이지 8개가 "본문 한글 0건"이었는데 담기 버튼을 눌러보니 장바구니에 한국어 상품명이 떴습니다. 값이 <code>data-*</code> 에 있고 JS 가 그걸 화면에 씁니다. <strong>실제로 눌러봐야 보이는 결함이 있습니다.</strong></li><li>쪼개짐이 0이어도 <strong>두 줄짜리 제목의 마지막 줄에 한 어절만 남는 것</strong>은 따로 봐야 합니다(<code>text-wrap: balance</code>).</li></ul>
+</section>
+<section>
+<h2 id="공통으로-배운-것">공통으로 배운 것</h2>
+<p><strong>측정이 실패를 뱉으면 도구부터 의심합니다.</strong> 위 세 절차를 쓰면서 실제로 틀린 판정을 여러 번 냈고, 그중 상당수가 코드나 사이트가 아니라 <strong>재는 방법</strong>의 문제였습니다.</p>
+<ul><li>항목의 자체 여백을 빼먹어 간격 비율이 미달로 나옴</li><li>가로로 놓인 요소를 세로 간격으로 잼</li><li><code>line-height: normal</code> 을 <code>parseFloat</code> 이 <code>NaN</code> 으로 만들어 행간이 0으로 나옴</li><li><code>head -c 6</code> 으로 자른 <code>&lt;?xml </code> 을 <code>'&lt;?xml'</code> 과 비교해 전부 불일치로 나옴</li><li><code>elementFromPoint</code> 는 뷰포트 좌표인데 화면 밖 요소에 그대로 씀</li></ul>
+<p><strong>결과를 보고하기 전에 그 값이 어떻게 나왔는지 한 번 더 확인합니다.</strong></p>
+</section>
+</main>
+<footer>
+  <p>2026-08-19 작성. 프레임워크 없이 마크다운에서 만들었고, 이 사이트의 소스는
+  <a href="https://github.com/forblune/forblune.github.io">같은 저장소</a>에 있습니다.</p>
+</footer>
+</body>
+</html>
