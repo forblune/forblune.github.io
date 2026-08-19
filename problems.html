@@ -14,46 +14,110 @@
 <meta name="twitter:title" content="해결하는 문제 7건 — 김건희 · Geonhee Kim">
 <meta name="twitter:description" content="운영 중인 사이트에서 나온 7건. 숫자는 전부 직접 측정한 값이고, 그중 2건은 제가 낸 사고입니다.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<style>:root{--ink:#16181d;--muted:#5b6270;--rule:#e3e6ec;--paper:#fff;--cta:#1f5fe0}
+<style>:root{--ink:#16181d;--muted:#5b6270;--rule:#e3e6ec;--paper:#fff;--cta:#1f5fe0;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace}
 @media (prefers-color-scheme:dark){:root{--ink:#e8eaee;--muted:#9aa3b2;--rule:#2a2f38;--paper:#14161a;--cta:#7fa8ff}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);
-  font:17px/1.75 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",Pretendard,"Noto Sans KR",sans-serif;
-  word-break:keep-all;overflow-wrap:break-word;letter-spacing:-.01em}
-main,footer{max-width:760px;margin:0 auto;padding:0 24px}
-main{padding-top:64px;padding-bottom:24px}
-h1{font-size:2rem;line-height:1.25;margin:0 0 16px;letter-spacing:-.03em;text-wrap:balance}
-h2{font-size:1.5rem;line-height:1.3;margin:56px 0 16px;letter-spacing:-.025em;text-wrap:balance}
-h3{font-size:1.125rem;margin:32px 0 8px;letter-spacing:-.02em}
-p{margin:0 0 16px}
-a{color:var(--cta);text-underline-offset:3px}
-hr{border:0;border-top:1px solid var(--rule);margin:48px 0}
-ul,ol{margin:0 0 16px;padding-left:20px}
-li{margin:8px 0}
-blockquote{margin:24px 0;padding:0 0 0 16px;border-left:2px solid var(--rule);color:var(--muted)}
-code{font-size:.9em;background:rgba(127,127,127,.12);padding:2px 5px;border-radius:3px}
-pre{overflow-x:auto;margin:24px 0;padding:16px;background:rgba(127,127,127,.08);border-radius:4px;font-size:.86rem;line-height:1.6}
-pre code{background:none;padding:0}
-.tablewrap{overflow-x:auto;margin:0 0 16px}
-table{width:100%;border-collapse:collapse;font-size:.94rem}
-th,td{text-align:left;vertical-align:top;padding:12px 12px 12px 0;border-bottom:1px solid var(--rule);line-height:1.6}
-/* 프로젝트 이름이 두 줄로 깨지면 안 된다 — 어절 쪼개짐을 측정한다고 써둔 표다 */
-td:first-child,th:first-child{white-space:nowrap;padding-right:20px}
-@media (max-width:520px){td:first-child,th:first-child{white-space:normal}}
-th{font-size:.8rem;color:var(--muted);font-weight:700;letter-spacing:0}
-td:last-child{color:var(--muted)}
-footer{border-top:1px solid var(--rule);margin-top:64px;padding-top:24px;padding-bottom:64px;color:var(--muted);font-size:.88rem}
-@media (max-width:640px){main{padding-top:40px}h1{font-size:1.6rem}h2{font-size:1.3rem;margin-top:44px}}
-</style>
+  font:17px/1.7 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif;
+  word-break:keep-all;overflow-wrap:break-word;letter-spacing:-.012em}
+
+/* 산문 720px · 표/코드 896px. 두 폭이 같은 중심축을 쓰고,
+   넓은 트랙은 표와 코드에만 준다 — 산문을 넓히면 왼쪽 모서리가 어긋나 사고로 읽힌다. */
+main{max-width:none;margin:0;padding:96px 0 0}
+main > :not(section){max-width:768px;margin:0 auto;padding:0 24px} /* 404 는 md() 를 안 거친다 */
+section{--text:720px;--wide:88px;display:grid;
+  grid-template-columns:
+    [full-start] minmax(24px,1fr)
+    [wide-start] minmax(0,var(--wide))
+    [text-start] min(var(--text),100% - 48px)
+    [text-end] minmax(0,var(--wide))
+    [wide-end] minmax(24px,1fr) [full-end];}
+section > *{grid-column:text;margin:0}
+section > .tablewrap,section > pre{grid-column:wide}
+
+/* 근접성 사다리 8·12·24·48·112 — 전부 4의 배수.
+   그리드 아이템은 마진이 상쇄되지 않으므로 인접 규칙으로만 준다. 순서가 곧 규칙이다:
+   `*+h3`(48) 이 `h2+*`(12) 보다 앞서므로 h2 다음의 h3 는 12px 로 묶인다. */
+section > * + *{margin-top:24px}
+section > * + h3{margin-top:48px}
+section > h2 + *{margin-top:12px}
+section > h3 + *{margin-top:8px}
+section + section{margin-top:112px}
+
+/* 크기 56/32/19/17/15/14 (3.29배) · 무게 800/700/600/400 */
+h1{font-size:clamp(40px,5.6vw,56px);line-height:1.08;font-weight:800;letter-spacing:-.04em;text-wrap:balance}
+h2{position:relative;font-size:32px;line-height:1.25;font-weight:700;letter-spacing:-.03em;text-wrap:balance}
+h3{font-size:15px;line-height:1.4;font-weight:700;letter-spacing:0;color:var(--muted)}
+strong{font-weight:600}                 /* 지금은 strong=h2=h3=700 이라 강조가 제목과 같은 무게다 */
+h2 strong,h3 strong{font-weight:inherit}
+
+/* 번호 붙은 절의 숫자를 좌측 여백에 매단다. 배경·테두리·점·포인트색 전부 없음. */
+h2 .idx{position:absolute;right:100%;margin-right:16px;top:2px; /* 2px = 광학 보정 */
+  font-size:24px;font-weight:700;line-height:1;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums;color:var(--muted)}
+@media (max-width:944px){               /* wide 트랙이 88px 를 못 채우는 구간 */
+  h2 .idx{position:static;margin-right:0;font-size:inherit;color:inherit;letter-spacing:inherit}
+  h2 .idx::after{content:". "}
+}
+
+a{color:var(--cta);text-underline-offset:3px;text-decoration-thickness:1px}
+ul,ol{padding-left:20px}
+li{margin:0 0 8px}
+li:last-child{margin-bottom:0}
+/* problems 에 7번 반복되는 2px 세로선을 없앤다. 고객 목소리를 muted 로 흐리지 않는다. */
+blockquote{padding-left:24px;border:0;font-size:19px;line-height:1.55;letter-spacing:-.025em;color:var(--ink)}
+sub{font-size:15px;line-height:1.6;color:var(--muted);vertical-align:baseline}
+
+/* 코드 = 두 번째 서체. 상태코드가 이 사이트의 증거인데 지금은 본문 산세리프로 나온다.
+   시스템 모노라 웹폰트는 여전히 0개. <code>/<pre> 밖에서는 절대 쓰지 않는다. */
+code,pre{font-family:var(--mono);letter-spacing:0;font-variant-numeric:tabular-nums}
+code{font-size:.88em;background:rgba(127,127,127,.12);padding:2px 4px;border-radius:3px}
+pre{overflow-x:auto;padding:24px;background:rgba(127,127,127,.06);border-radius:2px;font-size:15px;line-height:1.7}
+pre code{background:none;padding:0;font-size:inherit}
+
+/* 표를 주인공으로. 본문(17px)보다 작지 않게, 산문보다 176px 넓게.
+   행별 실선을 없애고 머리 1줄·바닥 1줄만 남긴다 — 반복 단위 안 실선 0.
+   열 폭은 지정하지 않는다: 자동 레이아웃이 「2024.2」를 57px, 문장 열을 넓게 알아서 잡는다. */
+.tablewrap{overflow-x:auto}             /* margin 을 쓰면 (0,1,0) 이 section>*+* 를 이겨 표가 0px 로 붙는다 */
+table{width:100%;border-collapse:collapse;font-size:17px;
+  font-variant-numeric:tabular-nums;border-bottom:1px solid var(--rule)}
+thead th{font-size:14px;font-weight:700;color:var(--muted);letter-spacing:0;
+  text-align:left;padding:0 20px 12px 0;border-bottom:1px solid var(--ink)}
+td{text-align:left;vertical-align:top;padding:20px 20px 20px 0;line-height:1.5;border:0}
+td:first-child{font-weight:600}
+td strong{font-weight:700}              /* 크기는 올리지 않는다 — 셀 전체가 strong 인 칸이 여럿이다 */
+td code{font-size:.82em}
+thead:has(th:empty){display:none}                        /* resume.md 의 `| | |` */
+table:has(thead th:empty){border-top:1px solid var(--rule)}
+/* td:last-child{color:var(--muted)} 는 삭제했다 — 이 규칙이 「개편 후」와
+   「제가 하는 것」, 즉 이 사이트의 증거 열만 정확히 흐리고 있었다. */
+
+footer{max-width:768px;margin:112px auto 0;padding:24px 24px 96px;
+  border-top:1px solid var(--rule);color:var(--muted);font-size:15px;line-height:1.6}
+footer p{margin:0}
+
+@media (max-width:640px){
+  main{padding-top:48px}
+  section + section{margin-top:72px}
+  section > * + h3{margin-top:40px}
+  h2{font-size:26px}
+  blockquote{font-size:18px}
+  table{font-size:16px}
+  td{padding:20px 16px 20px 0}          /* 세로 20 유지: 16 이면 32/24=1.33 으로 근접성 하한 붕괴 */
+  thead th{padding:0 16px 12px 0}
+  footer{margin-top:72px;padding-bottom:64px}
+}</style>
 </head>
 <body>
 <main>
-<p>&lt;!-- 이 파일은 사본이다. 정본은 forblune/forblune 의 docs/PROBLEMS_I_SOLVE.md 이며,      build/sync-problems.mjs 가 거기서 가져온다. 여기를 직접 고치면 다음 동기화에 사라진다. --&gt;</p>
+<section>
 <h1 id="제가-해결하는-문제">제가 해결하는 문제</h1>
 <p>포트폴리오는 보통 <strong>무엇을 만들었는지</strong>를 보여준다. 그런데 회사가 사는 것은 <strong>어떤 문제가 없어지는지</strong>다. 이 문서는 그 사이를 잇는다.</p>
 <p>아래 사례는 전부 실제로 운영 중인 사이트에서 나왔고, 숫자는 측정값이다. 추정치나 예시가 아니다.</p>
-<hr>
-<h2 id="1-매출로-가는-길이-조용히-끊긴-것을-찾아낸다">1. 매출로 가는 길이 조용히 끊긴 것을 찾아낸다</h2>
+</section>
+<section>
+<h2 id="1-매출로-가는-길이-조용히-끊긴-것을-찾아낸다"><span class="idx">1</span>매출로 가는 길이 조용히 끊긴 것을 찾아낸다</h2>
 <h3 id="증상-회사가-실제로-하는-말">증상 (회사가 실제로 하는 말)</h3>
 <blockquote>"광고는 돌리는데 문의가 안 들어와요." "예전엔 왔는데 요즘 뜸하네요."</blockquote>
 <h3 id="실제로-일어나는-일">실제로 일어나는 일</h3>
@@ -65,12 +129,12 @@ footer{border-top:1px solid var(--rule);margin-top:64px;padding-top:24px;padding
 오늘 배포     POST /api/lead → 405   (함수 없음)</code></pre>
 <p><code>400</code> 과 <code>405</code> 의 차이 하나로 "언제부터, 무엇 때문에"가 확정된다. 로그를 뒤지기 전에 <strong>재현 가능한 경계</strong>를 먼저 만든다.</p>
 <h3 id="조치">조치</h3>
-<ul><li>유실된 서버 함수를 복구하고 배포 경로에 포함</li><li>배포 후 검증을 절차로 고정: <code>POST /api/lead</code> 가 <strong>400 이면 정상, 405 면 배포 실패</strong></li><li>검증은 커스텀 도메인이 아니라 <strong>배포본 URL</strong> 로 한다.</li></ul>
-<p>  도메인은 CDN 캐시 때문에 이미 사라진 것도 한동안 200 을 돌려준다</p>
+<ul><li>유실된 서버 함수를 복구하고 배포 경로에 포함</li><li>배포 후 검증을 절차로 고정: <code>POST /api/lead</code> 가 <strong>400 이면 정상, 405 면 배포 실패</strong></li><li>검증은 커스텀 도메인이 아니라 <strong>배포본 URL</strong> 로 한다. 도메인은 CDN 캐시 때문에 이미 사라진 것도 한동안 200 을 돌려준다</li></ul>
 <h3 id="회사가-얻는-것">회사가 얻는 것</h3>
 <p>리드 유실을 <strong>시간 단위가 아니라 분 단위로</strong> 줄인다. 그리고 같은 사고가 다시 나면 배포 즉시 걸린다.</p>
-<hr>
-<h2 id="2-알림이-없어서-아무도-모르는-구조를-끝낸다">2. "알림이 없어서 아무도 모르는" 구조를 끝낸다</h2>
+</section>
+<section>
+<h2 id="2-알림이-없어서-아무도-모르는-구조를-끝낸다"><span class="idx">2</span>"알림이 없어서 아무도 모르는" 구조를 끝낸다</h2>
 <h3 id="증상">증상</h3>
 <blockquote>"문의가 들어오면 알림이 오죠?"</blockquote>
 <h3 id="실제로-일어나는-일">실제로 일어나는 일</h3>
@@ -84,8 +148,9 @@ footer{border-top:1px solid var(--rule);margin-top:64px;padding-top:24px;padding
 <p>이 설계는 곧바로 값을 했다. 첫 설정에서 API 키가 잘못 들어가 발송이 실패했는데, <strong>문의는 정상 저장됐고</strong> 로그에 <code>lead_notify_failed &lt;문의ID&gt; 401</code> 이 남아 원인이 5분 만에 확정됐다.</p>
 <h3 id="회사가-얻는-것">회사가 얻는 것</h3>
 <p>장애를 <strong>늦게 아는 비용</strong>이 장애 자체보다 크다. 그 시간을 없앤다.</p>
-<hr>
-<h2 id="3-어느-게-최신인지-모르겠는-상태를-끝낸다">3. "어느 게 최신인지 모르겠는" 상태를 끝낸다</h2>
+</section>
+<section>
+<h2 id="3-어느-게-최신인지-모르겠는-상태를-끝낸다"><span class="idx">3</span>"어느 게 최신인지 모르겠는" 상태를 끝낸다</h2>
 <h3 id="증상">증상</h3>
 <blockquote>"그 파일 어디 있죠?" "고쳤는데 배포하니까 예전 걸로 돌아갔어요."</blockquote>
 <h3 id="실제로-일어나는-일">실제로 일어나는 일</h3>
@@ -100,8 +165,9 @@ footer{border-top:1px solid var(--rule);margin-top:64px;padding-top:24px;padding
 <p>마지막 항목은 실제 사고에서 나왔다. 같은 날 두 저장소가 양방향으로 갈라진 것을 모르고 동기화를 돌릴 뻔했고, <strong>파일 9개가 지워질 뻔했다.</strong></p>
 <h3 id="회사가-얻는-것">회사가 얻는 것</h3>
 <p>인수인계가 가능해진다. 담당자가 바뀌어도 "정본이 어디냐"로 시작하지 않는다.</p>
-<hr>
-<h2 id="4-크롤로-만든-사본은-사이트의-사본이-아니다">4. 크롤로 만든 사본은 사이트의 사본이 아니다</h2>
+</section>
+<section>
+<h2 id="4-크롤로-만든-사본은-사이트의-사본이-아니다"><span class="idx">4</span>크롤로 만든 사본은 사이트의 사본이 아니다</h2>
 <h3 id="증상">증상</h3>
 <blockquote>"그대로 옮겼는데 왜 안 되죠?"</blockquote>
 <h3 id="실제로-일어나는-일">실제로 일어나는 일</h3>
@@ -112,8 +178,9 @@ footer{border-top:1px solid var(--rule);margin-top:64px;padding-top:24px;padding
 <p>이전 배포본에서 파일을 복원하고, 배포 전 점검 목록과 <strong>"검증은 도메인이 아니라 배포본 URL 로"</strong> 를 문서에 고정했다.</p>
 <h3 id="회사가-얻는-것">회사가 얻는 것</h3>
 <p>이전·리뉴얼·업체 교체 과정에서 <strong>조용히 사라지는 것</strong>을 막는다. 사라진 줄도 모르는 자산이 가장 비싸다.</p>
-<hr>
-<h2 id="5-남의-서비스-장애가-우리-장애가-되지-않게-한다">5. 남의 서비스 장애가 우리 장애가 되지 않게 한다</h2>
+</section>
+<section>
+<h2 id="5-남의-서비스-장애가-우리-장애가-되지-않게-한다"><span class="idx">5</span>남의 서비스 장애가 우리 장애가 되지 않게 한다</h2>
 <h3 id="증상">증상</h3>
 <blockquote>"사진이 깨져 보여요. 어제는 됐는데요."</blockquote>
 <h3 id="실제로-일어나는-일">실제로 일어나는 일</h3>
@@ -123,14 +190,12 @@ footer{border-top:1px solid var(--rule);margin-top:64px;padding-top:24px;padding
 외부 이미지 의존   0</code></pre>
 <h3 id="선별에서-걸러낸-함정">선별에서 걸러낸 함정</h3>
 <p>무료 이미지 API 는 그냥 받아 쓰면 안 된다. 실제로 두 가지에 걸렸다.</p>
-<ul><li><strong>평면 스캔본</strong> — 배경만 있는 이미지가 화면에서 단색 회색 박스로 읽힌다.</li></ul>
-<p>  "사진이 안 채워진 것처럼 보인다"는 지적의 실제 원인이었다</p>
-<ul><li><strong>박물관 소장품 촬영본</strong> — 사진 카테고리를 통과하지만 웹사이트 예시에는</li></ul>
-<p>  전혀 맞지 않는다. 촬영기관 이름으로 걸러냈다</p>
+<ul><li><strong>평면 스캔본</strong> — 배경만 있는 이미지가 화면에서 단색 회색 박스로 읽힌다. "사진이 안 채워진 것처럼 보인다"는 지적의 실제 원인이었다</li><li><strong>박물관 소장품 촬영본</strong> — 사진 카테고리를 통과하지만 웹사이트 예시에는 전혀 맞지 않는다. 촬영기관 이름으로 걸러냈다</li></ul>
 <h3 id="회사가-얻는-것">회사가 얻는 것</h3>
 <p><strong>우리가 통제할 수 없는 것에 사이트를 걸지 않는다.</strong> 공짜 외부 자원은 공짜인 만큼 보장이 없다.</p>
-<hr>
-<h2 id="6-ai가-만든-티-를-만드는-실제-원인을-잡는다">6. "AI가 만든 티"를 만드는 실제 원인을 잡는다</h2>
+</section>
+<section>
+<h2 id="6-ai가-만든-티-를-만드는-실제-원인을-잡는다"><span class="idx">6</span>"AI가 만든 티"를 만드는 실제 원인을 잡는다</h2>
 <h3 id="증상">증상</h3>
 <blockquote>"뭔가 어색한데 뭐가 문제인지 모르겠어요." "성의 없어 보인다는 말을 들었어요."</blockquote>
 <h3 id="실제로-일어나는-일">실제로 일어나는 일</h3>
@@ -147,8 +212,9 @@ overflow-wrap: break-word;   /* URL 처럼 끊을 수 없는 긴 토큰만 예�
 <p>필수 항목 문제는 특히 실제 손실로 이어지고 있었다. 서버는 필수로 검사하는데 화면에는 표시가 없어서, 그 항목을 안 채운 사용자는 <strong>"문제가 발생했습니다"만 보고 이유를 알 수 없었다.</strong> 제출 전에 잡아서 무엇을 채워야 하는지 알려주도록 고쳤다.</p>
 <h3 id="회사가-얻는-것">회사가 얻는 것</h3>
 <p><strong>전환율.</strong> 내용이 좋아도 검수 안 된 인상이면 문의하지 않는다.</p>
-<hr>
-<h2 id="7-기본적인-것이-빠져-있는지-확인한다">7. 기본적인 것이 빠져 있는지 확인한다</h2>
+</section>
+<section>
+<h2 id="7-기본적인-것이-빠져-있는지-확인한다"><span class="idx">7</span>기본적인 것이 빠져 있는지 확인한다</h2>
 <h3 id="증상">증상</h3>
 <blockquote>"명함에 적은 주소가 안 열린다는데요?"</blockquote>
 <h3 id="실제로-일어나는-일">실제로 일어나는 일</h3>
@@ -165,17 +231,21 @@ forblune.com/a/b?x=1     → portfolio.forblune.com/a/b?x=1</code></pre>
 <p>작업 후 메일 레코드(MX·SPF·DMARC) 무결성을 확인했다.</p>
 <h3 id="회사가-얻는-것">회사가 얻는 것</h3>
 <p><strong>고치러 갔다가 다른 걸 부수지 않는다.</strong> 이게 운영 중인 시스템을 만지는 일의 핵심이다.</p>
-<hr>
+</section>
+<section>
 <h2 id="정리-한-줄로">정리 — 한 줄로</h2>
 <div class="tablewrap"><table><thead><tr><th>회사가 겪는 것</th><th>제가 하는 것</th></tr></thead><tbody><tr><td>문의가 안 들어오는데 이유를 모름</td><td>끊긴 경로를 재현 가능한 경계로 찾아 복구하고, 재발을 배포 절차로 막음</td></tr><tr><td>장애를 뒤늦게 앎</td><td>실패가 조용히 죽지 않는 알림·로그 구조를 넣음</td></tr><tr><td>최신본이 어디 있는지 모름</td><td>정본을 확정해 저장소에 고정하고 배포를 단방향으로 못박음</td></tr><tr><td>이전·리뉴얼에서 뭔가 사라짐</td><td>크롤에 안 잡히는 자산까지 포함한 점검 절차</td></tr><tr><td>남의 서비스 장애로 우리가 멈춤</td><td>외부 의존을 걷어내고 통제 가능한 자원으로 대체</td></tr><tr><td>"AI가 만든 티" 라는 말을 들음</td><td>신뢰를 깎는 기본기 결함을 찾아 고침</td></tr><tr><td>기본적인 게 빠져 있음</td><td>살아 있는 것을 부수지 않고 빠진 것만 채움</td></tr></tbody></table></div>
-<hr>
+</section>
+<section>
 <h2 id="일하는-방식">일하는 방식</h2>
 <p><strong>추측으로 고치지 않는다.</strong> 원인을 확정하는 재현 가능한 경계를 먼저 만든다. <code>400</code> 인가 <code>405</code> 인가, 해시가 같은가 다른가 — 이런 것으로 확정한 뒤에 손을 댄다.</p>
 <p><strong>고친 것은 반드시 확인한다.</strong> 코드가 컴파일되는 것과 사용자에게 동작하는 것은 다르다. 실제 화면에서 끝까지 제출해보고, 데이터베이스에 들어갔는지까지 본다.</p>
 <p><strong>같은 사고가 두 번 나지 않게 만든다.</strong> 고치고 끝내지 않고, 왜 그랬는지와 어떻게 확인하는지를 저장소에 남긴다. 다음 사람이 나일 필요가 없어야 한다.</p>
 <p><strong>내 실수도 그대로 적는다.</strong> 위 사례 중 1·4번은 <strong>제가 만든 사고</strong>다. 찾아내고, 원인을 규명하고, 재발 방지까지 하고, 기록으로 남겼다. 사고를 안 내는 사람은 없다. 사고를 숨기지 않고 시스템으로 막는 사람이 필요할 뿐이다.</p>
-<hr>
-<p>&lt;sub&gt;사례의 모든 숫자는 2026-08-18 실측값이다. 검증 명령과 근거는 각 저장소의 커밋 메시지와 <code>docs/</code> 에 남아 있다.&lt;/sub&gt;</p>
+</section>
+<section>
+<p><sub>사례의 모든 숫자는 2026-08-18 실측값이다. 검증 명령과 근거는 각 저장소의 커밋 메시지와 <code>docs/</code> 에 남아 있다.</sub></p>
+</section>
 </main>
 <footer>
   <p>2026-08-19 작성. 프레임워크 없이 마크다운에서 만들었고, 이 사이트의 소스는

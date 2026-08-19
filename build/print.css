@@ -1,31 +1,35 @@
-/* A4 인쇄용. 화면에서도 이력서 페이지는 조금 더 조밀하게 읽히는 편이 낫다. */
-main{max-width:720px}
-h1{font-size:1.75rem;margin-bottom:8px}
-h2{font-size:1.15rem;margin:32px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
-table{font-size:.82rem}
-th,td{padding:8px 10px 8px 0}
-p{margin:0 0 12px}
-hr{margin:28px 0}
+/* 이력서 전용. 화면과 인쇄 둘 다.
+   ⚠️ main{max-width} 를 여기서 다시 선언하면 style.css 의 main{max-width:none} 을
+      소스 순서로 이겨 이력서만 조용히 좁아진다. 절대 넣지 말 것. */
+section{--text:720px}
+section + section{margin-top:72px}
+h1{font-size:clamp(32px,4.4vw,40px)}
+h2{font-size:24px}
+/* h2 에 border-bottom 을 긋지 않는다 — 반복 단위 안 실선이 7개 생긴다 */
+p > strong:first-child{font-weight:700}   /* 전역 strong:600 을 이력서 리드에서만 되돌림 */
 
 @page{size:A4;margin:12mm 13mm 10mm}
 @media print{
   :root{--ink:#111;--muted:#555;--rule:#ccc;--paper:#fff;--cta:#0b3ea8}
   body{font-size:9.2pt;line-height:1.58}
-  main{max-width:none;padding:0}
+  main{padding:0}
   footer{display:none}
-  h1{font-size:17pt}
-  h2{font-size:11pt;margin:14pt 0 6pt;break-after:avoid}
-  h2+p,h2+.tablewrap,h2+ul,h2+ol{break-before:avoid}
+  h1{font-size:17pt;margin-bottom:4pt}
+  h2{font-size:11pt;break-after:avoid}
+  h3{font-size:9pt}
+  h2 .idx{position:static;margin-right:0;font-size:inherit;color:inherit}
+  h2 .idx::after{content:". "}
+  section{display:block}
+  section + section{margin-top:14pt}
+  section > * + *{margin-top:6pt}
+  section > * + h3{margin-top:10pt}
+  section > h2 + *{margin-top:5pt}
   p,li,tr,blockquote{break-inside:avoid}
+  h2 + p,h2 + .tablewrap,h2 + ul,h2 + ol{break-before:avoid}
   table{font-size:8.4pt}
-  th,td{padding:3pt 6pt 3pt 0}
-  hr{margin:11pt 0}
+  thead th{padding:0 8pt 4pt 0;border-bottom:.5pt solid var(--ink)}
+  td{padding:4pt 8pt 4pt 0}
+  pre{padding:8pt;font-size:7.6pt}
   a{color:var(--cta);text-decoration:none}
-  /* 링크 주소를 본문에 펼치지 않는다 — 표가 무너지고 2장을 넘긴다.
-     주소는 상단 연락처 줄과 사이트에 이미 있다. */
-  a[href^="http"]::after{content:none}
+  a[href^="http"]::after{content:none}   /* 링크 주소를 펼치면 표가 무너지고 장수가 는다 */
 }
-
-@media print{p,li{margin-bottom:6pt}ul,ol{margin-bottom:5pt;padding-left:15pt}li{margin-top:0}}
-
-@media print{table td:first-child{width:22%;white-space:nowrap}}

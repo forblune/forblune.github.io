@@ -14,69 +14,139 @@
 <meta name="twitter:title" content="김건희 · Geonhee Kim — 웹을 만들고 조용히 망가진 곳을 찾습니다">
 <meta name="twitter:description" content="만든 것이 지금 열리는지, 그리고 무엇이 아닌지까지 같은 표에 적어 둡니다. 운영 중인 사이트 8곳과 실측 근거로 정리한 문제 7건.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<style>:root{--ink:#16181d;--muted:#5b6270;--rule:#e3e6ec;--paper:#fff;--cta:#1f5fe0}
+<style>:root{--ink:#16181d;--muted:#5b6270;--rule:#e3e6ec;--paper:#fff;--cta:#1f5fe0;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace}
 @media (prefers-color-scheme:dark){:root{--ink:#e8eaee;--muted:#9aa3b2;--rule:#2a2f38;--paper:#14161a;--cta:#7fa8ff}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);
-  font:17px/1.75 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",Pretendard,"Noto Sans KR",sans-serif;
-  word-break:keep-all;overflow-wrap:break-word;letter-spacing:-.01em}
-main,footer{max-width:760px;margin:0 auto;padding:0 24px}
-main{padding-top:64px;padding-bottom:24px}
-h1{font-size:2rem;line-height:1.25;margin:0 0 16px;letter-spacing:-.03em;text-wrap:balance}
-h2{font-size:1.5rem;line-height:1.3;margin:56px 0 16px;letter-spacing:-.025em;text-wrap:balance}
-h3{font-size:1.125rem;margin:32px 0 8px;letter-spacing:-.02em}
-p{margin:0 0 16px}
-a{color:var(--cta);text-underline-offset:3px}
-hr{border:0;border-top:1px solid var(--rule);margin:48px 0}
-ul,ol{margin:0 0 16px;padding-left:20px}
-li{margin:8px 0}
-blockquote{margin:24px 0;padding:0 0 0 16px;border-left:2px solid var(--rule);color:var(--muted)}
-code{font-size:.9em;background:rgba(127,127,127,.12);padding:2px 5px;border-radius:3px}
-pre{overflow-x:auto;margin:24px 0;padding:16px;background:rgba(127,127,127,.08);border-radius:4px;font-size:.86rem;line-height:1.6}
-pre code{background:none;padding:0}
-.tablewrap{overflow-x:auto;margin:0 0 16px}
-table{width:100%;border-collapse:collapse;font-size:.94rem}
-th,td{text-align:left;vertical-align:top;padding:12px 12px 12px 0;border-bottom:1px solid var(--rule);line-height:1.6}
-/* 프로젝트 이름이 두 줄로 깨지면 안 된다 — 어절 쪼개짐을 측정한다고 써둔 표다 */
-td:first-child,th:first-child{white-space:nowrap;padding-right:20px}
-@media (max-width:520px){td:first-child,th:first-child{white-space:normal}}
-th{font-size:.8rem;color:var(--muted);font-weight:700;letter-spacing:0}
-td:last-child{color:var(--muted)}
-footer{border-top:1px solid var(--rule);margin-top:64px;padding-top:24px;padding-bottom:64px;color:var(--muted);font-size:.88rem}
-@media (max-width:640px){main{padding-top:40px}h1{font-size:1.6rem}h2{font-size:1.3rem;margin-top:44px}}
-</style>
+  font:17px/1.7 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif;
+  word-break:keep-all;overflow-wrap:break-word;letter-spacing:-.012em}
+
+/* 산문 720px · 표/코드 896px. 두 폭이 같은 중심축을 쓰고,
+   넓은 트랙은 표와 코드에만 준다 — 산문을 넓히면 왼쪽 모서리가 어긋나 사고로 읽힌다. */
+main{max-width:none;margin:0;padding:96px 0 0}
+main > :not(section){max-width:768px;margin:0 auto;padding:0 24px} /* 404 는 md() 를 안 거친다 */
+section{--text:720px;--wide:88px;display:grid;
+  grid-template-columns:
+    [full-start] minmax(24px,1fr)
+    [wide-start] minmax(0,var(--wide))
+    [text-start] min(var(--text),100% - 48px)
+    [text-end] minmax(0,var(--wide))
+    [wide-end] minmax(24px,1fr) [full-end];}
+section > *{grid-column:text;margin:0}
+section > .tablewrap,section > pre{grid-column:wide}
+
+/* 근접성 사다리 8·12·24·48·112 — 전부 4의 배수.
+   그리드 아이템은 마진이 상쇄되지 않으므로 인접 규칙으로만 준다. 순서가 곧 규칙이다:
+   `*+h3`(48) 이 `h2+*`(12) 보다 앞서므로 h2 다음의 h3 는 12px 로 묶인다. */
+section > * + *{margin-top:24px}
+section > * + h3{margin-top:48px}
+section > h2 + *{margin-top:12px}
+section > h3 + *{margin-top:8px}
+section + section{margin-top:112px}
+
+/* 크기 56/32/19/17/15/14 (3.29배) · 무게 800/700/600/400 */
+h1{font-size:clamp(40px,5.6vw,56px);line-height:1.08;font-weight:800;letter-spacing:-.04em;text-wrap:balance}
+h2{position:relative;font-size:32px;line-height:1.25;font-weight:700;letter-spacing:-.03em;text-wrap:balance}
+h3{font-size:15px;line-height:1.4;font-weight:700;letter-spacing:0;color:var(--muted)}
+strong{font-weight:600}                 /* 지금은 strong=h2=h3=700 이라 강조가 제목과 같은 무게다 */
+h2 strong,h3 strong{font-weight:inherit}
+
+/* 번호 붙은 절의 숫자를 좌측 여백에 매단다. 배경·테두리·점·포인트색 전부 없음. */
+h2 .idx{position:absolute;right:100%;margin-right:16px;top:2px; /* 2px = 광학 보정 */
+  font-size:24px;font-weight:700;line-height:1;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums;color:var(--muted)}
+@media (max-width:944px){               /* wide 트랙이 88px 를 못 채우는 구간 */
+  h2 .idx{position:static;margin-right:0;font-size:inherit;color:inherit;letter-spacing:inherit}
+  h2 .idx::after{content:". "}
+}
+
+a{color:var(--cta);text-underline-offset:3px;text-decoration-thickness:1px}
+ul,ol{padding-left:20px}
+li{margin:0 0 8px}
+li:last-child{margin-bottom:0}
+/* problems 에 7번 반복되는 2px 세로선을 없앤다. 고객 목소리를 muted 로 흐리지 않는다. */
+blockquote{padding-left:24px;border:0;font-size:19px;line-height:1.55;letter-spacing:-.025em;color:var(--ink)}
+sub{font-size:15px;line-height:1.6;color:var(--muted);vertical-align:baseline}
+
+/* 코드 = 두 번째 서체. 상태코드가 이 사이트의 증거인데 지금은 본문 산세리프로 나온다.
+   시스템 모노라 웹폰트는 여전히 0개. <code>/<pre> 밖에서는 절대 쓰지 않는다. */
+code,pre{font-family:var(--mono);letter-spacing:0;font-variant-numeric:tabular-nums}
+code{font-size:.88em;background:rgba(127,127,127,.12);padding:2px 4px;border-radius:3px}
+pre{overflow-x:auto;padding:24px;background:rgba(127,127,127,.06);border-radius:2px;font-size:15px;line-height:1.7}
+pre code{background:none;padding:0;font-size:inherit}
+
+/* 표를 주인공으로. 본문(17px)보다 작지 않게, 산문보다 176px 넓게.
+   행별 실선을 없애고 머리 1줄·바닥 1줄만 남긴다 — 반복 단위 안 실선 0.
+   열 폭은 지정하지 않는다: 자동 레이아웃이 「2024.2」를 57px, 문장 열을 넓게 알아서 잡는다. */
+.tablewrap{overflow-x:auto}             /* margin 을 쓰면 (0,1,0) 이 section>*+* 를 이겨 표가 0px 로 붙는다 */
+table{width:100%;border-collapse:collapse;font-size:17px;
+  font-variant-numeric:tabular-nums;border-bottom:1px solid var(--rule)}
+thead th{font-size:14px;font-weight:700;color:var(--muted);letter-spacing:0;
+  text-align:left;padding:0 20px 12px 0;border-bottom:1px solid var(--ink)}
+td{text-align:left;vertical-align:top;padding:20px 20px 20px 0;line-height:1.5;border:0}
+td:first-child{font-weight:600}
+td strong{font-weight:700}              /* 크기는 올리지 않는다 — 셀 전체가 strong 인 칸이 여럿이다 */
+td code{font-size:.82em}
+thead:has(th:empty){display:none}                        /* resume.md 의 `| | |` */
+table:has(thead th:empty){border-top:1px solid var(--rule)}
+/* td:last-child{color:var(--muted)} 는 삭제했다 — 이 규칙이 「개편 후」와
+   「제가 하는 것」, 즉 이 사이트의 증거 열만 정확히 흐리고 있었다. */
+
+footer{max-width:768px;margin:112px auto 0;padding:24px 24px 96px;
+  border-top:1px solid var(--rule);color:var(--muted);font-size:15px;line-height:1.6}
+footer p{margin:0}
+
+@media (max-width:640px){
+  main{padding-top:48px}
+  section + section{margin-top:72px}
+  section > * + h3{margin-top:40px}
+  h2{font-size:26px}
+  blockquote{font-size:18px}
+  table{font-size:16px}
+  td{padding:20px 16px 20px 0}          /* 세로 20 유지: 16 이면 32/24=1.33 으로 근접성 하한 붕괴 */
+  thead th{padding:0 16px 12px 0}
+  footer{margin-top:72px;padding-bottom:64px}
+}</style>
 </head>
 <body>
 <main>
+<section>
 <h1 id="김건희-geonhee-kim">김건희 · Geonhee Kim</h1>
 <p>웹을 만들고, <strong>조용히 망가진 곳을 찾아 고칩니다.</strong></p>
 <p>만든 것이 지금 열리는지, 그리고 <strong>무엇이 아닌지</strong>까지 같은 표에 적어 둡니다.</p>
 <p><a href="/resume.pdf">이력서 PDF</a> · <a href="https://github.com/forblune">GitHub</a> · <a href="mailto:geonhee@forblune.com?subject=%5B%EC%B1%84%EC%9A%A9%5D%20%EB%AC%B8%EC%9D%98">geonhee@forblune.com</a></p>
-<hr>
+</section>
+<section>
 <h2 id="지금-열리는-것">지금 열리는 것</h2>
 <p>아래 주소는 전부 지금 응답합니다. 각 줄은 <strong>무엇을 확인할 수 있는지</strong>와 <strong>어디까지가 경계인지</strong>를 같이 적었습니다.</p>
 <div class="tablewrap"><table><thead><tr><th>프로젝트</th><th>확인할 수 있는 것</th><th>경계</th></tr></thead><tbody><tr><td><a href="https://webcare.forblune.com">Web Care</a></td><td>반응형 서비스 페이지, 요금·환불 정책, 문의 접수, 체크아웃</td><td>제 서비스 사이트. 유료 고객은 아직 없습니다</td></tr><tr><td><a href="https://gallery.forblune.com">Style Gallery</a></td><td>8개 방향 24페이지, 영문판 8개</td><td>자체 기획. 가상 브랜드</td></tr><tr><td><a href="https://mellowroom.forblune.com">Mellow Room</a></td><td>한/영 예약 흐름, 일정 화면, 운영자 화면</td><td>자체 기획 데모. 가상 데이터</td></tr><tr><td><a href="https://opsflow.forblune.com">OpsFlow</a></td><td>CSV 반입, 검증 규칙, KPI 화면, 정제 CSV 반출</td><td>자체 기획 데모. 가상 데이터</td></tr><tr><td><a href="https://clientflow.forblune.com">ClientFlow</a></td><td>검색, 파이프라인 단계, 리드 상세, 다음 액션</td><td>자체 기획 데모. 가상 데이터</td></tr><tr><td><a href="https://serviceos.forblune.com">ServiceOS</a></td><td>견적·프로젝트·청구·이슈·감사 화면</td><td>자체 기획 데모. 가상 데이터</td></tr><tr><td><a href="https://mindhub.forblune.com">MindHub</a></td><td>진료 기록 흐름과 사전 요약 개념</td><td>프로토타입. 가상 환자 데이터. <strong>진단 도구가 아닙니다</strong></td></tr><tr><td><a href="https://gapproof.forblune.com">GapProof</a></td><td>경험을 출처 있는 진술로 바꾸는 흐름</td><td>프로토타입. 진로 탐색 연구</td></tr></tbody></table></div>
 <p><strong>자체 기획으로 만든 것을 유료 고객 작업으로 내세우지 않습니다.</strong></p>
-<hr>
+</section>
+<section>
 <h2 id="해결하는-문제">해결하는 문제</h2>
 <p>운영 중인 사이트에서 나온 <strong>7건</strong>입니다. 숫자는 전부 제가 직접 측정한 값입니다.</p>
 <p><strong>7건 중 2건은 제가 낸 사고입니다.</strong> 어떻게 났고 어떻게 알아냈는지 같이 적었습니다.</p>
 <ul><li>광고는 돌리는데 문의가 안 들어온다 → 문의 API 가 <strong>4시간 동안 405</strong> 를 돌려주는 동안 화면은 정상으로 보였다</li><li>사진이 깨져 보인다 → 외부 이미지 핫링크 <strong>243건 → 0건</strong>, 전부 자가 호스팅으로</li><li>최신본이 어디 있는지 모르겠다 → 로컬 사본 <strong>8곳 중 라이브와 일치하는 것 0곳</strong></li><li>뭔가 어색한데 뭐가 문제인지 모르겠다 → 한글 어절이 단어 중간에서 끊기던 것을 측정해 수치화</li></ul>
 <p><a href="/problems.html">7건 전문 읽기</a></p>
-<hr>
+</section>
+<section>
 <h2 id="이-사이트를-제-방식으로-검사했습니다">이 사이트를 제 방식으로 검사했습니다</h2>
 <p>제가 파는 것이 "화면은 멀쩡한데 죽어 있는 것을 찾는 일"입니다. 그러면 <strong>제 사이트부터 그 기준을 통과해야 합니다.</strong></p>
 <p>개편 전에 이 사이트를 직접 검사한 결과입니다. 전부 실측이고, 고친 뒤 값을 함께 적었습니다.</p>
 <div class="tablewrap"><table><thead><tr><th>검사</th><th>개편 전</th><th>개편 후</th></tr></thead><tbody><tr><td>본문 단어 수 (JS 실행 전)</td><td><strong>0</strong> — <code>&lt;div id="root"&gt;</code> 뿐</td><td>실제 본문</td></tr><tr><td>하위 경로 응답</td><td><code>/problems</code> 등 <strong>전부 404</strong></td><td>200</td></tr><tr><td>404 페이지가 참조하는 에셋</td><td><strong>둘 다 404</strong> → 404 상태의 백지</td><td>살아 있음</td></tr><tr><td><code>canonical</code></td><td><strong>남의 도메인</strong>을 가리켜 스스로 색인 포기</td><td>자기 주소</td></tr><tr><td><code>robots.txt</code> · <code>sitemap.xml</code></td><td><strong>둘 다 404</strong></td><td>실제 파일</td></tr><tr><td>이력서 파일</td><td><strong>404</strong> (없었음)</td><td>있음</td></tr><tr><td>커밋 작성자 이름</td><td><strong>두 가지가 섞여 있었음</strong></td><td>하나로</td></tr></tbody></table></div>
 <p>원인은 하나였습니다. 이 사이트는 다른 사이트의 <strong>빌드 산출물 미러</strong>였고, GitHub Pages 에는 SPA 폴백이 없어서 하위 경로가 전부 죽어 있었습니다. 미러를 끊고 정적 페이지로 다시 발행했습니다.</p>
 <blockquote>고치기 전 상태를 지우지 않고 그대로 둡니다. 이 표가 없으면 위의 주장은 확인할 방법이 없습니다.</blockquote>
-<hr>
+</section>
+<section>
 <h2 id="판별-절차">판별 절차</h2>
 <p>형용사 대신 <strong>남이 따라 할 수 있는 절차</strong>로 적었습니다.</p>
 <ul><li><strong>400 과 405 로 경계 만들기</strong> — 경로가 없는 것과 메서드가 막힌 것을 가르면 "언제부터, 무엇 때문에"가 확정됩니다</li><li><strong>해시 대조로 정본 판정하기</strong> — 사본이 여러 개일 때 어느 것도 정본이 아닐 수 있습니다</li><li><strong>어절 쪼개짐 측정</strong> — 한국어 레이아웃 붕괴를 눈이 아니라 숫자로 셉니다</li></ul>
-<hr>
+</section>
+<section>
 <h2 id="forblune">Forblune</h2>
 <p><code>Forblune</code> 이라는 이름으로 웹 제작·개선 외주도 합니다 — <a href="https://portfolio.forblune.com">portfolio.forblune.com</a></p>
+</section>
 </main>
 <footer>
   <p>2026-08-19 작성. 프레임워크 없이 마크다운에서 만들었고, 이 사이트의 소스는

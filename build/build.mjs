@@ -67,6 +67,14 @@ for (const [src, m] of Object.entries(PAGES)) {
   try {
     const body = md(readFileSync(join(ROOT, "content", src), "utf8"));
     if (!body.trim()) { console.error(`build: ${src} 가 비었다`); process.exit(1); }
+    // 원고의 마크업이 본문 글자로 새 나가는 것을 막는다.
+    // 실제로 두 번 샜다 — HTML 주석과 <sub> 태그가 화면에 그대로 찍혔다.
+    for (const bad of [/&lt;!--/, /&lt;sub/, /&lt;\/?br/]) {
+      if (bad.test(body)) {
+        console.error(`build: 원문이 본문으로 샜다 — ${src} ${bad}`);
+        process.exit(1);
+      }
+    }
     writeFileSync(join(ROOT, m.out), page(body, m), "utf8");
     written.push(m.path);
   } catch (e) {
