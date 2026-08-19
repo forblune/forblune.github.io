@@ -56,23 +56,23 @@ hr{margin:28px 0}
 @page{size:A4;margin:12mm 13mm 10mm}
 @media print{
   :root{--ink:#111;--muted:#555;--rule:#ccc;--paper:#fff;--cta:#0b3ea8}
-  body{font-size:8.9pt;line-height:1.5}
+  body{font-size:8.5pt;line-height:1.47}
   main{max-width:none;padding:0}
   footer{display:none}
   h1{font-size:15.5pt}
-  h2{font-size:10.2pt;margin:10pt 0 4pt;break-after:avoid}
+  h2{font-size:9.8pt;margin:8pt 0 3pt;break-after:avoid}
   h2+p,h2+.tablewrap,h2+ul,h2+ol{break-before:avoid}
   p,li,tr,blockquote{break-inside:avoid}
   table{font-size:7.6pt}
   th,td{padding:3pt 6pt 3pt 0}
-  hr{margin:8pt 0}
+  hr{margin:6pt 0}
   a{color:var(--cta);text-decoration:none}
   /* 링크 주소를 본문에 펼치지 않는다 — 표가 무너지고 2장을 넘긴다.
      주소는 상단 연락처 줄과 사이트에 이미 있다. */
   a[href^="http"]::after{content:none}
 }
 
-@media print{p,li{margin-bottom:5pt}ul,ol{margin-bottom:5pt;padding-left:15pt}li{margin-top:0}}
+@media print{p,li{margin-bottom:4pt}ul,ol{margin-bottom:5pt;padding-left:15pt}li{margin-top:0}}
 </style>
 </head>
 <body>
@@ -98,11 +98,14 @@ hr{margin:28px 0}
 <h2 id="일하는-방식">일하는 방식</h2>
 <ol><li>추측으로 고치지 않는다. 원인을 확정하는 <strong>재현 가능한 경계</strong>를 먼저 만든다.</li><li>고친 것은 반드시 확인한다. 코드가 컴파일되는 것과 사용자에게 동작하는 것은 다르다.</li><li>같은 사고가 두 번 나지 않게 만든다. 왜 그랬는지와 어떻게 확인하는지를 저장소에 남긴다.</li><li><strong>내 실수도 그대로 적는다.</strong> 숨기면 나머지 보고의 신뢰도까지 떨어진다.</li></ol>
 <hr>
+<h2 id="교육">교육</h2>
+<p><strong>수도권ICT이노베이션스퀘어 — 쉬었음 청년 디지털 맞춤교육 (ReBoot 1기)</strong> · 2026.06~ AI 이미지 생성, 데이터 분석, 바이브 코딩, AI 코딩 에이전트 기반 서비스 제작</p>
+<hr>
 <h2 id="기술">기술</h2>
 <ul><li><strong>언어·프레임워크</strong> — HTML · CSS · JavaScript · TypeScript · React · Python</li><li><strong>배포·인프라</strong> — Cloudflare Workers/Pages · D1 · GitHub Actions · Git</li><li><strong>품질</strong> — 반응형 레이아웃 · 브라우저 QA · 접근성 기본 · 한국어 타이포그래피</li></ul>
 </main>
 <footer>
-  <p>2026-08-18 작성. 프레임워크 없이 마크다운에서 만들었고, 이 사이트의 소스는
+  <p>2026-08-19 작성. 프레임워크 없이 마크다운에서 만들었고, 이 사이트의 소스는
   <a href="https://github.com/forblune/forblune.github.io">같은 저장소</a>에 있습니다.</p>
 </footer>
 </body>
