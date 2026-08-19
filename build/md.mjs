@@ -5,7 +5,10 @@
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 function inline(s) {
+  // 표 안에서 줄을 나눠야 할 때가 있어 <br> 만 통과시킨다. 나머지 HTML 은 그대로 막는다 —
+  // 원고가 마크다운이므로 임의 HTML 을 허용할 이유가 없다.
   return esc(s)
+    .replace(/&lt;br\s*\/?&gt;/g, "<br>")
     .replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, t, h) =>
       `<a href="${h}"${/^https?:/.test(h) && !h.includes("forblune") ? ' rel="noreferrer"' : ""}>${t}</a>`)

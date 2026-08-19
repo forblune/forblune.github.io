@@ -47,7 +47,7 @@ footer{border-top:1px solid var(--rule);margin-top:64px;padding-top:24px;padding
 /* A4 인쇄용. 화면에서도 이력서 페이지는 조금 더 조밀하게 읽히는 편이 낫다. */
 main{max-width:720px}
 h1{font-size:1.75rem;margin-bottom:8px}
-h2{font-size:1.15rem;margin:32px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--rule)}
+h2{font-size:1.15rem;margin:32px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
 table{font-size:.82rem}
 th,td{padding:8px 10px 8px 0}
 p{margin:0 0 12px}
@@ -56,23 +56,23 @@ hr{margin:28px 0}
 @page{size:A4;margin:12mm 13mm 10mm}
 @media print{
   :root{--ink:#111;--muted:#555;--rule:#ccc;--paper:#fff;--cta:#0b3ea8}
-  body{font-size:8.5pt;line-height:1.47}
+  body{font-size:9.2pt;line-height:1.58}
   main{max-width:none;padding:0}
   footer{display:none}
-  h1{font-size:15.5pt}
-  h2{font-size:9.8pt;margin:8pt 0 3pt;break-after:avoid}
+  h1{font-size:17pt}
+  h2{font-size:11pt;margin:14pt 0 6pt;break-after:avoid}
   h2+p,h2+.tablewrap,h2+ul,h2+ol{break-before:avoid}
   p,li,tr,blockquote{break-inside:avoid}
-  table{font-size:7.6pt}
+  table{font-size:8.4pt}
   th,td{padding:3pt 6pt 3pt 0}
-  hr{margin:6pt 0}
+  hr{margin:11pt 0}
   a{color:var(--cta);text-decoration:none}
   /* 링크 주소를 본문에 펼치지 않는다 — 표가 무너지고 2장을 넘긴다.
      주소는 상단 연락처 줄과 사이트에 이미 있다. */
   a[href^="http"]::after{content:none}
 }
 
-@media print{p,li{margin-bottom:4pt}ul,ol{margin-bottom:5pt;padding-left:15pt}li{margin-top:0}}
+@media print{p,li{margin-bottom:6pt}ul,ol{margin-bottom:5pt;padding-left:15pt}li{margin-top:0}}
 
 @media print{table td:first-child{width:22%;white-space:nowrap}}
 </style>
@@ -80,28 +80,37 @@ hr{margin:28px 0}
 <body>
 <main>
 <h1 id="김건희-geonhee-kim">김건희 · Geonhee Kim</h1>
-<p><strong>웹 개발 · 반응형 웹과 소규모 운영 도구</strong></p>
+<p><strong>웹 개발 · 컴퓨터 비전 · 운영 자동화</strong></p>
 <p><a href="mailto:geonhee@forblune.com">geonhee@forblune.com</a> · <a href="https://github.com/forblune">github.com/forblune</a> · <a href="https://forblune.github.io">forblune.github.io</a></p>
 <hr>
 <h2 id="요약">요약</h2>
-<p>반응형 웹사이트와 소규모 운영 도구를 만들고, <strong>이미 돌아가는 것이 조용히 망가진 지점을 찾아 고칩니다.</strong> 아래 사이트는 전부 직접 만들어 지금 운영 중이며, 각 항목에 <strong>무엇을 확인할 수 있고 어디까지가 경계인지</strong>를 같이 적었습니다. 자체 기획으로 만든 것을 유료 고객 작업으로 내세우지 않습니다.</p>
+<p>만든 것이 <strong>지금 열리는지</strong>, 그리고 <strong>무엇이 아닌지</strong>까지 같은 표에 적습니다. 컴퓨터 비전 모델을 학습시켜 앱까지 내보내고, 반응형 웹을 만들어 운영하며, <strong>이미 돌아가는 것이 조용히 망가진 지점</strong>을 재현 가능한 근거로 찾아 고칩니다. 아래 숫자는 전부 직접 측정한 값입니다. 자체 기획으로 만든 것을 유료 고객 작업으로 내세우지 않습니다.</p>
 <hr>
-<h2 id="지금-운영-중인-것">지금 운영 중인 것</h2>
-<div class="tablewrap"><table><thead><tr><th>프로젝트</th><th>확인할 수 있는 것</th><th>경계</th></tr></thead><tbody><tr><td>Web Care</td><td>반응형 서비스 페이지, 요금·환불 정책, 문의 접수, 체크아웃</td><td>자체 서비스. 유료 고객 없음</td></tr><tr><td>Style Gallery</td><td>8개 방향 24페이지, 영문판 8개, 프레임워크 없는 단일 HTML</td><td>자체 기획. 가상 브랜드</td></tr><tr><td>Mellow Room</td><td>한/영 예약 흐름, 일정 화면, 운영자 화면</td><td>자체 기획 데모. 가상 데이터</td></tr><tr><td>OpsFlow</td><td>CSV 반입, 검증 규칙, KPI 화면, 정제 CSV 반출</td><td>자체 기획 데모. 가상 데이터</td></tr><tr><td>ClientFlow</td><td>검색, 파이프라인 단계, 리드 상세, 다음 액션</td><td>자체 기획 데모. 가상 데이터</td></tr><tr><td>ServiceOS</td><td>견적·프로젝트·청구·이슈·감사 화면</td><td>자체 기획 데모. 가상 데이터</td></tr><tr><td>MindHub</td><td>진료 기록 흐름과 사전 요약 개념</td><td>프로토타입. 가상 데이터. 진단 도구 아님</td></tr><tr><td>GapProof</td><td>경험을 출처 있는 진술로 바꾸는 흐름</td><td>프로토타입. 진로 탐색 연구</td></tr></tbody></table></div>
-<p>주소는 <code>forblune.github.io</code> 에 있습니다. 전부 지금 응답합니다.</p>
+<h2 id="대표-프로젝트">대표 프로젝트</h2>
+<p><strong>RePET Vision — 투명 PET 병 자동 분류</strong> · 2025.9 · 강원 AI 아이디어 경진대회 투명/유색 PET 2클래스 객체탐지. Roboflow로 700장 수집 후 증강 <strong>1,726장</strong>(train 1,539 / val 126 / test 61), YOLOv8n · 640px · 40 epochs · batch 16. <strong>mAP50 약 91% · mAP50-95 약 52%.</strong> Android Studio로 앱까지 빌드해 카메라 실시간 인식과 확신도 표시를 구현했습니다. 강릉시 재활용 단가(330 → 538원/kg)로 경제성 근거를 붙였습니다.</p>
+<p><strong>K2J — CCTV 흡연 행위 탐지</strong> · 2025.7 · CKU 하계 AI 프로젝트 공원 CCTV 영상에서 단일 클래스 탐지. YOLOv5 · PyTorch · 640px · 50 epochs. <strong>mAP@0.5 약 0.97 · mAP@0.5:0.95 약 0.68 · Precision 약 0.90 · Recall 약 0.98.</strong> 진행 기록 총괄과 영상 바운더리 보정 코드 작성, 프레임 간격 기능을 맡았습니다.</p>
+<p><strong>MindHub — 정신과 케어 플랫폼</strong> · 2026.6~ 진행 중 환자 일상 기록 → AI 임상 요약 → 의사 전달, 의사의 CBT 숙제 처방까지 양방향. React · Supabase · 카카오 로그인 · Solar(Upstage) LLM. <strong>진단 도구가 아니라 기록·요약·전달</strong>로 범위를 명시해 설계했습니다.</p>
+<p><strong>운영 중인 웹 8곳</strong> — <a href="https://forblune.github.io">forblune.github.io</a> 에 주소와 경계를 표로 적었습니다. Web Care(요금·환불·문의·체크아웃), Style Gallery(8방향 24페이지 · 영문판 8개 · 프레임워크 없는 단일 HTML), Mellow Room · OpsFlow · ClientFlow · ServiceOS(자체 기획 데모, 가상 데이터) 등. 전부 지금 응답합니다.</p>
 <hr>
 <h2 id="해결한-문제">해결한 문제</h2>
-<p>운영 중인 사이트에서 나온 사례입니다. 숫자는 전부 직접 측정한 값입니다. <strong>아래 4건 중 1건은 제가 낸 사고이고, 그 사실을 문서에 그대로 적었습니다.</strong></p>
-<p><strong>문의가 안 들어오는데 화면은 멀쩡했다</strong> 정적 배포 과정에서 서버 함수가 빠져 문의 API 가 <strong>4시간 동안 405</strong> 를 돌려주고 있었다. <code>400</code>(요청이 잘못됨)과 <code>405</code>(경로는 있으나 메서드가 막힘)를 갈라 "언제부터 무엇 때문에"를 확정했다. 복구 후 배포 검증을 절차로 고정했다 — 도메인이 아니라 배포본 URL 로 확인한다(CDN 캐시가 지워진 파일에도 200 을 준다).</p>
-<p><strong>최신본이 어디 있는지 아무도 몰랐다</strong> 운영 사이트의 소스가 git 어디에도 없었다. 로컬 후보 8곳을 라이브와 해시 대조한 결과 <strong>일치하는 것이 0곳</strong>. 라이브 산출물을 정본으로 확정해 저장소에 고정하고, 배포를 단방향 스크립트로 못박았다.</p>
-<p><strong>남의 서비스 장애가 우리 장애가 됐다</strong> 쇼케이스 사진이 외부 무료 이미지 서비스를 직접 링크하고 있어, 그쪽 장애 때 절반이 회색 박스가 됐다. <strong>외부 핫링크 243건 → 0건</strong>, 234개 파일을 CC0 로 선별해 자체 호스팅으로 옮겼다.</p>
-<p><strong>"AI가 만든 티"의 실제 원인</strong> 대개 내용이 아니라 기본기다. 가장 흔한 것이 한글 어절이 단어 중간에서 끊기는 문제. <code>Intl.Segmenter</code> 로 어절을 잘라 <code>Range.getClientRects()</code> 가 두 줄에 걸치는 개수를 세어 수치화했고, 운영 중인 사이트 전체와 예시 25페이지에 적용해 <strong>0건</strong>으로 만들었다.</p>
+<p>운영 중인 사이트에서 나온 사례입니다. <strong>아래 4건 중 1건은 제가 낸 사고이고, 그 사실을 문서에 그대로 적었습니다.</strong></p>
+<p><strong>문의가 안 들어오는데 화면은 멀쩡했다</strong> — 정적 배포에서 서버 함수가 빠져 문의 API가 <strong>4시간 동안 405</strong>를 돌려주고 있었습니다. <code>400</code>(요청이 잘못됨)과 <code>405</code>(경로는 있으나 메서드가 막힘)를 갈라 "언제부터 무엇 때문에"를 확정했습니다. 복구 후 배포 검증을 절차로 고정했습니다 — 도메인이 아니라 배포본 URL로 확인합니다(CDN 캐시가 지워진 파일에도 200을 줍니다).</p>
+<p><strong>최신본이 어디 있는지 아무도 몰랐다</strong> — 운영 사이트의 소스가 git 어디에도 없었습니다. 로컬 후보 8곳을 라이브와 해시 대조한 결과 <strong>일치하는 것이 0곳.</strong> 라이브 산출물을 정본으로 확정해 고정하고 배포를 단방향으로 못박았습니다.</p>
+<p><strong>남의 서비스 장애가 우리 장애가 됐다</strong> — 외부 무료 이미지 서비스를 직접 링크하고 있어 그쪽 장애 때 절반이 회색 박스가 됐습니다. <strong>외부 핫링크 243건 → 0건</strong>, 234개 파일을 CC0로 선별해 자체 호스팅으로 옮겼습니다.</p>
+<p><strong>"AI가 만든 티"의 실제 원인</strong> — 대개 내용이 아니라 기본기입니다. 한글 어절이 단어 중간에서 끊기는 문제를 <code>Intl.Segmenter</code>와 <code>Range.getClientRects()</code>로 세어 수치화했고, 운영 사이트 전체와 예시 25페이지에 적용해 <strong>0건</strong>으로 만들었습니다.</p>
+<hr>
+<h2 id="수상">수상</h2>
+<div class="tablewrap"><table><thead><tr><th>시기</th><th>내용</th></tr></thead><tbody><tr><td>2024.2</td><td><strong>생성형 AI 챗봇 만들기 부트캠프 — 최우수상(1위)</strong> · 가톨릭관동대 · <strong>4조 조장</strong> · 2박 3일 팀 개발 (MIT App Inventor)</td></tr><tr><td>2024.7</td><td><strong>차세대 글로벌 창업무역스쿨(OKTA·포스코) — 장려상</strong> · 제22기 모국방문교육 · 팀 발표 <code>smart WALK</code></td></tr><tr><td>2025</td><td><strong>학술제 우주물류 발표 — 장려상</strong> · 「지구–달–화성 3단계 Sustainable Deep Space Logistics」 단독 발표</td></tr></tbody></table></div>
+<hr>
+<h2 id="사업-운영">사업·운영</h2>
+<p><strong>오픈마켓 광고센터 운영</strong> · 2025.1~3 — G마켓·옥션·11번가에서 <strong>상품 약 1,700개</strong>의 광고그룹을 관리했습니다. 광고 ON/OFF, 카테고리 매칭, 키워드·일예산 조정으로 ROAS를 개선하고 상품 구조조정을 판단했습니다.</p>
+<p><strong>스마트스토어 1인 운영</strong> · 2024.10~ — 본인 사업자로 소싱 → 등록 → 주문·배송 → 교환/CS → 정산 풀사이클을 직접 돌렸습니다.</p>
 <hr>
 <h2 id="일하는-방식">일하는 방식</h2>
 <p>추측으로 고치지 않고 원인을 확정하는 <strong>재현 가능한 경계</strong>를 먼저 만듭니다. 코드가 컴파일되는 것과 사용자에게 동작하는 것은 다르므로 고친 것은 실제 화면에서 확인합니다. 왜 그랬는지와 어떻게 확인하는지를 저장소에 남겨 같은 사고가 두 번 나지 않게 합니다. <strong>내 실수도 그대로 적습니다</strong> — 숨기면 나머지 보고의 신뢰도까지 떨어집니다.</p>
 <hr>
 <h2 id="학력-교육-기술">학력 · 교육 · 기술</h2>
-<div class="tablewrap"><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><strong>학력</strong></td><td>백양고등학교 졸업 · 재학 중 영재반</td></tr><tr><td><strong>교육</strong></td><td><strong>수도권 ICT이노베이션스퀘어 — 바이브코딩 웹 프로젝트 과정</strong> 수료 · 2026.06.01~06.22 (80시간) · 정보통신산업진흥원(NIPA)</td></tr><tr><td><strong>언어·프레임워크</strong></td><td>HTML · CSS · JavaScript · TypeScript · React · Python</td></tr><tr><td><strong>배포·인프라</strong></td><td>Cloudflare Workers/Pages · D1 · GitHub Actions · Git</td></tr><tr><td><strong>품질</strong></td><td>반응형 레이아웃 · 브라우저 QA · 접근성 기본 · 한국어 타이포그래피</td></tr></tbody></table></div>
+<div class="tablewrap"><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><strong>학력</strong></td><td><strong>가톨릭관동대학교 항공교통물류전공</strong> 2024.3~ 재학 · 백양고등학교 졸업(영재학급 수·과학 115시간 이수)</td></tr><tr><td><strong>교육</strong></td><td><strong>수도권 ICT이노베이션스퀘어 — 바이브코딩 웹 프로젝트 과정</strong> 수료 · 2026.06.01~06.22 (80시간) · 정보통신산업진흥원(NIPA)<br>CKU AI Academy 고급 특성화 과정(컴퓨터비전·NLP·멀티모달) · 2025.6~7</td></tr><tr><td><strong>컴퓨터 비전</strong></td><td>YOLOv5/v8 · Roboflow · OpenCV · PyTorch · Google Colab</td></tr><tr><td><strong>웹·앱</strong></td><td>HTML · CSS · JavaScript · TypeScript · React · Supabase · Android Studio</td></tr><tr><td><strong>배포·인프라</strong></td><td>Cloudflare Workers/Pages · D1 · GitHub Actions · Git · Raspberry Pi</td></tr><tr><td><strong>품질</strong></td><td>반응형 레이아웃 · 브라우저 QA · 접근성 기본 · 한국어 타이포그래피</td></tr></tbody></table></div>
 </main>
 <footer>
   <p>2026-08-19 작성. 프레임워크 없이 마크다운에서 만들었고, 이 사이트의 소스는
