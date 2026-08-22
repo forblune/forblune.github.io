@@ -87,7 +87,10 @@ ${m.alt ? `<link rel="alternate" hreflang="${m.lang}" href="${SITE}${m.path}">
 <meta property="og:title" content="${m.title}">
 <meta property="og:description" content="${m.desc}">
 <meta property="og:url" content="${SITE}${m.path}">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="${SITE}/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${m.title}">
 <meta name="twitter:description" content="${m.desc}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
