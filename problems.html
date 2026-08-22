@@ -5,8 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>해결하는 문제 7건 — 김건희 · Geonhee Kim</title>
 <link rel="canonical" href="https://forblune.github.io/problems.html">
+<link rel="alternate" hreflang="ko" href="https://forblune.github.io/problems.html">
+<link rel="alternate" hreflang="en" href="https://forblune.github.io/en/problems.html">
+<link rel="alternate" hreflang="x-default" href="https://forblune.github.io/problems.html">
 <meta name="description" content="운영 중인 사이트에서 나온 7건. 숫자는 전부 직접 측정한 값이고, 그중 2건은 제가 낸 사고입니다.">
 <meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
 <meta property="og:title" content="해결하는 문제 7건 — 김건희 · Geonhee Kim">
 <meta property="og:description" content="운영 중인 사이트에서 나온 7건. 숫자는 전부 직접 측정한 값이고, 그중 2건은 제가 낸 사고입니다.">
 <meta property="og:url" content="https://forblune.github.io/problems.html">
@@ -61,6 +65,11 @@ h2 .idx{position:absolute;right:100%;margin-right:16px;top:2px; /* 2px = 광학 
   h2 .idx::after{content:". "}
 }
 
+/* 상단 언어·홈 한 줄. 폭은 main > :not(section) 이 이미 본문 열(720px)에 맞춰 주므로
+   여기서는 크기와 아래 간격만 정한다. 사다리 값 48 을 그대로 쓴다. */
+.lang{font-size:15px;color:var(--muted);margin-bottom:48px}
+.lang a{color:var(--muted)}
+
 a{color:var(--cta);text-underline-offset:3px;text-decoration-thickness:1px}
 ul,ol{padding-left:20px}
 li{margin:0 0 8px}
@@ -111,6 +120,7 @@ footer p{margin:0}
 </head>
 <body>
 <main>
+<nav class="lang"><a href="/">홈</a> · <a href="/en/problems.html" hreflang="en">English</a></nav>
 <section>
 <h1 id="제가-해결하는-문제">제가 해결하는 문제</h1>
 <p>포트폴리오는 보통 <strong>무엇을 만들었는지</strong>를 보여준다. 그런데 회사가 사는 것은 <strong>어떤 문제가 없어지는지</strong>다. 이 문서는 그 사이를 잇는다.</p>
@@ -248,7 +258,7 @@ forblune.com/a/b?x=1     → portfolio.forblune.com/a/b?x=1</code></pre>
 </section>
 </main>
 <footer>
-  <p>2026-08-19 작성. 프레임워크 없이 마크다운에서 만들었고, 이 사이트의 소스는
+  <p>2026-08-22 작성. 프레임워크 없이 마크다운에서 만들었고, 이 사이트의 소스는
   <a href="https://github.com/forblune/forblune.github.io">같은 저장소</a>에 있습니다.</p>
 </footer>
 </body>

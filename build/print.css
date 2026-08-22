@@ -13,6 +13,7 @@ p > strong:first-child{font-weight:700}   /* 전역 strong:600 을 이력서 리
   :root{--ink:#111;--muted:#555;--rule:#ccc;--paper:#fff;--cta:#0b3ea8}
   body{font-size:9.2pt;line-height:1.58}
   main{padding:0}
+  .lang{display:none}   /* 언어 전환은 화면 전용. 인쇄된 이력서에서는 누를 수 없다 */
   footer{display:none}
   h1{font-size:17pt;margin-bottom:4pt}
   h2{font-size:11pt;break-after:avoid}

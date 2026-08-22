@@ -5,8 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>김건희 · Geonhee Kim — 웹을 만들고 조용히 망가진 곳을 찾습니다</title>
 <link rel="canonical" href="https://forblune.github.io/">
+<link rel="alternate" hreflang="ko" href="https://forblune.github.io/">
+<link rel="alternate" hreflang="en" href="https://forblune.github.io/en/index.html">
+<link rel="alternate" hreflang="x-default" href="https://forblune.github.io/">
 <meta name="description" content="만든 것이 지금 열리는지, 그리고 무엇이 아닌지까지 같은 표에 적어 둡니다. 운영 중인 사이트 8곳과 실측 근거로 정리한 문제 7건.">
 <meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
 <meta property="og:title" content="김건희 · Geonhee Kim — 웹을 만들고 조용히 망가진 곳을 찾습니다">
 <meta property="og:description" content="만든 것이 지금 열리는지, 그리고 무엇이 아닌지까지 같은 표에 적어 둡니다. 운영 중인 사이트 8곳과 실측 근거로 정리한 문제 7건.">
 <meta property="og:url" content="https://forblune.github.io/">
@@ -61,6 +65,11 @@ h2 .idx{position:absolute;right:100%;margin-right:16px;top:2px; /* 2px = 광학 
   h2 .idx::after{content:". "}
 }
 
+/* 상단 언어·홈 한 줄. 폭은 main > :not(section) 이 이미 본문 열(720px)에 맞춰 주므로
+   여기서는 크기와 아래 간격만 정한다. 사다리 값 48 을 그대로 쓴다. */
+.lang{font-size:15px;color:var(--muted);margin-bottom:48px}
+.lang a{color:var(--muted)}
+
 a{color:var(--cta);text-underline-offset:3px;text-decoration-thickness:1px}
 ul,ol{padding-left:20px}
 li{margin:0 0 8px}
@@ -111,6 +120,7 @@ footer p{margin:0}
 </head>
 <body>
 <main>
+<nav class="lang"><a href="/en/index.html" hreflang="en">English</a></nav>
 <section>
 <h1 id="김건희-geonhee-kim">김건희 · Geonhee Kim</h1>
 <p>웹을 만들고, <strong>조용히 망가진 곳을 찾아 고칩니다.</strong></p>
@@ -150,7 +160,7 @@ footer p{margin:0}
 </section>
 </main>
 <footer>
-  <p>2026-08-19 작성. 프레임워크 없이 마크다운에서 만들었고, 이 사이트의 소스는
+  <p>2026-08-22 작성. 프레임워크 없이 마크다운에서 만들었고, 이 사이트의 소스는
   <a href="https://github.com/forblune/forblune.github.io">같은 저장소</a>에 있습니다.</p>
 </footer>
 </body>

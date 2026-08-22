@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Seven problems I solve — Geonhee Kim</title>
+<link rel="canonical" href="https://forblune.github.io/en/problems.html">
+<link rel="alternate" hreflang="en" href="https://forblune.github.io/en/problems.html">
+<link rel="alternate" hreflang="ko" href="https://forblune.github.io/problems.html">
+<link rel="alternate" hreflang="x-default" href="https://forblune.github.io/problems.html">
+<meta name="description" content="Seven cases from sites that are live. Every number is measured, and two of the seven are incidents I caused.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Seven problems I solve — Geonhee Kim">
+<meta property="og:description" content="Seven cases from sites that are live. Every number is measured, and two of the seven are incidents I caused.">
+<meta property="og:url" content="https://forblune.github.io/en/problems.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Seven problems I solve — Geonhee Kim">
+<meta name="twitter:description" content="Seven cases from sites that are live. Every number is measured, and two of the seven are incidents I caused.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>:root{--ink:#16181d;--muted:#5b6270;--rule:#e3e6ec;--paper:#fff;--cta:#1f5fe0;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--ink:#e8eaee;--muted:#9aa3b2;--rule:#2a2f38;--paper:#14161a;--cta:#7fa8ff}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:17px/1.7 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif;
+  word-break:keep-all;overflow-wrap:break-word;letter-spacing:-.012em}
+
+/* 산문 720px · 표/코드 896px. 두 폭이 같은 중심축을 쓰고,
+   넓은 트랙은 표와 코드에만 준다 — 산문을 넓히면 왼쪽 모서리가 어긋나 사고로 읽힌다. */
+main{max-width:none;margin:0;padding:96px 0 0}
+main > :not(section){max-width:768px;margin:0 auto;padding:0 24px} /* 404 는 md() 를 안 거친다 */
+section{--text:720px;--wide:88px;display:grid;
+  grid-template-columns:
+    [full-start] minmax(24px,1fr)
+    [wide-start] minmax(0,var(--wide))
+    [text-start] min(var(--text),100% - 48px)
+    [text-end] minmax(0,var(--wide))
+    [wide-end] minmax(24px,1fr) [full-end];}
+section > *{grid-column:text;margin:0}
+section > .tablewrap,section > pre{grid-column:wide}
+
+/* 근접성 사다리 8·12·24·48·112 — 전부 4의 배수.
+   그리드 아이템은 마진이 상쇄되지 않으므로 인접 규칙으로만 준다. 순서가 곧 규칙이다:
+   `*+h3`(48) 이 `h2+*`(12) 보다 앞서므로 h2 다음의 h3 는 12px 로 묶인다. */
+section > * + *{margin-top:24px}
+section > * + h3{margin-top:48px}
+section > h2 + *{margin-top:12px}
+section > h3 + *{margin-top:8px}
+section + section{margin-top:112px}
+
+/* 크기 56/32/19/17/15/14 (3.29배) · 무게 800/700/600/400 */
+h1{font-size:clamp(40px,5.6vw,56px);line-height:1.08;font-weight:800;letter-spacing:-.04em;text-wrap:balance}
+h2{position:relative;font-size:32px;line-height:1.25;font-weight:700;letter-spacing:-.03em;text-wrap:balance}
+h3{font-size:15px;line-height:1.4;font-weight:700;letter-spacing:0;color:var(--muted)}
+strong{font-weight:600}                 /* 지금은 strong=h2=h3=700 이라 강조가 제목과 같은 무게다 */
+h2 strong,h3 strong{font-weight:inherit}
+
+/* 번호 붙은 절의 숫자를 좌측 여백에 매단다. 배경·테두리·점·포인트색 전부 없음. */
+h2 .idx{position:absolute;right:100%;margin-right:16px;top:2px; /* 2px = 광학 보정 */
+  font-size:24px;font-weight:700;line-height:1;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums;color:var(--muted)}
+@media (max-width:944px){               /* wide 트랙이 88px 를 못 채우는 구간 */
+  h2 .idx{position:static;margin-right:0;font-size:inherit;color:inherit;letter-spacing:inherit}
+  h2 .idx::after{content:". "}
+}
+
+/* 상단 언어·홈 한 줄. 폭은 main > :not(section) 이 이미 본문 열(720px)에 맞춰 주므로
+   여기서는 크기와 아래 간격만 정한다. 사다리 값 48 을 그대로 쓴다. */
+.lang{font-size:15px;color:var(--muted);margin-bottom:48px}
+.lang a{color:var(--muted)}
+
+a{color:var(--cta);text-underline-offset:3px;text-decoration-thickness:1px}
+ul,ol{padding-left:20px}
+li{margin:0 0 8px}
+li:last-child{margin-bottom:0}
+/* problems 에 7번 반복되는 2px 세로선을 없앤다. 고객 목소리를 muted 로 흐리지 않는다. */
+blockquote{padding-left:24px;border:0;font-size:19px;line-height:1.55;letter-spacing:-.025em;color:var(--ink)}
+sub{font-size:15px;line-height:1.6;color:var(--muted);vertical-align:baseline}
+
+/* 코드 = 두 번째 서체. 상태코드가 이 사이트의 증거인데 지금은 본문 산세리프로 나온다.
+   시스템 모노라 웹폰트는 여전히 0개. <code>/<pre> 밖에서는 절대 쓰지 않는다. */
+code,pre{font-family:var(--mono);letter-spacing:0;font-variant-numeric:tabular-nums}
+code{font-size:.88em;background:rgba(127,127,127,.12);padding:2px 4px;border-radius:3px}
+pre{overflow-x:auto;padding:24px;background:rgba(127,127,127,.06);border-radius:2px;font-size:15px;line-height:1.7}
+pre code{background:none;padding:0;font-size:inherit}
+
+/* 표를 주인공으로. 본문(17px)보다 작지 않게, 산문보다 176px 넓게.
+   행별 실선을 없애고 머리 1줄·바닥 1줄만 남긴다 — 반복 단위 안 실선 0.
+   열 폭은 지정하지 않는다: 자동 레이아웃이 「2024.2」를 57px, 문장 열을 넓게 알아서 잡는다. */
+.tablewrap{overflow-x:auto}             /* margin 을 쓰면 (0,1,0) 이 section>*+* 를 이겨 표가 0px 로 붙는다 */
+table{width:100%;border-collapse:collapse;font-size:17px;
+  font-variant-numeric:tabular-nums;border-bottom:1px solid var(--rule)}
+thead th{font-size:14px;font-weight:700;color:var(--muted);letter-spacing:0;
+  text-align:left;padding:0 20px 12px 0;border-bottom:1px solid var(--ink)}
+td{text-align:left;vertical-align:top;padding:20px 20px 20px 0;line-height:1.5;border:0}
+td:first-child{font-weight:600}
+td strong{font-weight:700}              /* 크기는 올리지 않는다 — 셀 전체가 strong 인 칸이 여럿이다 */
+td code{font-size:.82em}
+thead:has(th:empty){display:none}                        /* resume.md 의 `| | |` */
+table:has(thead th:empty){border-top:1px solid var(--rule)}
+/* td:last-child{color:var(--muted)} 는 삭제했다 — 이 규칙이 「개편 후」와
+   「제가 하는 것」, 즉 이 사이트의 증거 열만 정확히 흐리고 있었다. */
+
+footer{max-width:768px;margin:112px auto 0;padding:24px 24px 96px;
+  border-top:1px solid var(--rule);color:var(--muted);font-size:15px;line-height:1.6}
+footer p{margin:0}
+
+@media (max-width:640px){
+  main{padding-top:48px}
+  section + section{margin-top:72px}
+  section > * + h3{margin-top:40px}
+  h2{font-size:26px}
+  blockquote{font-size:18px}
+  table{font-size:16px}
+  td{padding:20px 16px 20px 0}          /* 세로 20 유지: 16 이면 32/24=1.33 으로 근접성 하한 붕괴 */
+  thead th{padding:0 16px 12px 0}
+  footer{margin-top:72px;padding-bottom:64px}
+}</style>
+</head>
+<body>
+<main>
+<nav class="lang"><a href="/en/index.html">Home</a> · <a href="/problems.html" hreflang="ko">한국어</a></nav>
+<section>
+<h1 id="problems-i-solve">Problems I solve</h1>
+<p>A portfolio usually shows <strong>what someone built.</strong> What a company actually buys is <strong>which problem goes away.</strong> This document connects the two.</p>
+<p>Every case below came from a site that is live, and every number is measured. None of it is an estimate or an illustration.</p>
+</section>
+<section>
+<h2 id="1-finding-the-path-to-revenue-that-quietly-broke"><span class="idx">1</span>Finding the path to revenue that quietly broke</h2>
+<h3 id="the-symptom-in-the-words-a-company-actually-uses">The symptom, in the words a company actually uses</h3>
+<blockquote>"The ads are running but no enquiries come in." "We used to get them. It has gone quiet lately."</blockquote>
+<h3 id="what-is-really-happening">What is really happening</h3>
+<p>When an enquiry form dies, <strong>the page still looks fine.</strong> The visitor sees "Something went wrong" and leaves. Nobody tells the company. The ad spend keeps going out.</p>
+<p>On 2026-08-18 this happened on the live site <code>webcare.forblune.com</code>. A static-only deploy dropped the server function entirely, and the enquiry API returned <strong>405</strong> for about four hours. The page looked normal the whole time.</p>
+<h3 id="how-i-found-it">How I found it</h3>
+<p>I sent the same request at each deployment to narrow the boundary.</p>
+<pre><code>deploy from 2 days ago   POST /api/lead → 400   (function alive, rejecting a bad body)
+deploy from today        POST /api/lead → 405   (function missing)</code></pre>
+<p>The difference between <code>400</code> and <code>405</code> alone settles "since when, and because of what." I build <strong>a reproducible boundary</strong> before digging through logs.</p>
+<h3 id="what-i-did">What I did</h3>
+<ul><li>Restored the lost server function and put it back in the deploy path</li><li>Froze post-deploy verification into a procedure: <code>POST /api/lead</code> returning <strong>400 is healthy, 405 means the deploy failed</strong></li><li>Verify against the <strong>deployment URL</strong>, not the custom domain. CDN caching keeps the domain returning 200 for things that are already gone</li></ul>
+<h3 id="what-the-company-gets">What the company gets</h3>
+<p>Lead loss measured <strong>in minutes instead of hours.</strong> And if the same incident recurs, the deploy catches it immediately.</p>
+</section>
+<section>
+<h2 id="2-ending-the-structure-where-nobody-finds-out"><span class="idx">2</span>Ending the structure where nobody finds out</h2>
+<h3 id="the-symptom">The symptom</h3>
+<blockquote>"We get a notification when an enquiry comes in, right?"</blockquote>
+<h3 id="what-is-really-happening">What is really happening</h3>
+<p>After fixing the incident above I found something larger. <strong>There were no notifications at all.</strong> Enquiries were saved to the database and nobody knew until a person went and looked. I searched every branch in the repository and there was not one line of mail-sending code.</p>
+<p>Meanwhile the page was promising this:</p>
+<blockquote>"Someone will get back to you shortly."</blockquote>
+<p>An enquiry could sit unattended for days. The moment you turn ads on, that becomes a direct loss.</p>
+<h3 id="what-i-did">What I did</h3>
+<p>I added mail notifications, designed so that <strong>the notification cannot eat the enquiry.</strong></p>
+<ul><li>The notification is sent <strong>after the save completes.</strong> If mail fails, the enquiry is already stored</li><li>It does not block the response. The user is not waiting on an email</li><li>Failures are <strong>always logged.</strong> A notification that dies silently is the worst kind</li><li>Replying directly to the received mail reaches the person who enquired</li></ul>
+<p>The design paid for itself immediately. The first configuration had a wrong API key and sending failed — <strong>the enquiry saved correctly</strong>, and <code>lead_notify_failed &lt;id&gt; 401</code> in the log settled the cause in five minutes.</p>
+<h3 id="what-the-company-gets">What the company gets</h3>
+<p><strong>The cost of finding out late</strong> is larger than the outage itself. This removes that gap.</p>
+</section>
+<section>
+<h2 id="3-ending-nobody-knows-which-one-is-current"><span class="idx">3</span>Ending "nobody knows which one is current"</h2>
+<h3 id="the-symptom">The symptom</h3>
+<blockquote>"Where is that file?" "I fixed it, and then the deploy brought the old version back."</blockquote>
+<h3 id="what-is-really-happening">What is really happening</h3>
+<p>The source of a live site was <strong>in no git repository anywhere.</strong></p>
+<p>There were eight local candidates — the repo itself, a build output, <code>v3</code>, <code>v5</code>, <code>v6</code>, <code>v6 2</code>, <code>v6-v2</code>, and a recovery copy. I hashed all of them against live.</p>
+<pre><code>8 candidates  →  matching live: 0</code></pre>
+<p>Files had been uploaded directly with no git integration, so there was no history. In that state, <strong>anything anyone fixes can vanish on the next deploy.</strong> It had already happened once: an old build overwrote the final version.</p>
+<h3 id="what-i-did">What I did</h3>
+<ul><li>Downloaded the live output, verified it by hash, and <strong>pinned it into the repository as canonical</strong></li><li>Wrote the canonical rule, the deploy command, and the pre- and post-deploy checks into a README in the same folder</li><li>Made the deploy pipeline <strong>one-directional and scripted</strong></li></ul>
+<p>The guards I put in the deploy script:</p>
+<div class="tablewrap"><table><thead><tr><th>Guard</th><th>The incident it prevents</th></tr></thead><tbody><tr><td>Dry run by default, <code>--apply</code> required</td><td>Unintended immediate publish</td></tr><tr><td>Verify the target repository origin</td><td>Overwriting the wrong repository</td></tr><tr><td>Abort if the target has uncommitted changes</td><td>Destroying someone else's work</td></tr><tr><td>Abort on build failure</td><td>Shipping a stale build</td></tr><tr><td><strong>Show the delete count and require typing <code>yes</code></strong></td><td>Mass deletion</td></tr></tbody></table></div>
+<p>The last one came out of a real incident. Two repositories had diverged in both directions on the same day, I nearly ran a sync without knowing, and <strong>nine files were about to be deleted.</strong></p>
+<h3 id="what-the-company-gets">What the company gets</h3>
+<p>Handover becomes possible. When the person changes, nobody starts from "where is the real copy?"</p>
+</section>
+<section>
+<h2 id="4-a-crawled-copy-is-not-a-copy-of-the-site"><span class="idx">4</span>A crawled copy is not a copy of the site</h2>
+<h3 id="the-symptom">The symptom</h3>
+<blockquote>"We moved it over exactly. Why does it not work?"</blockquote>
+<h3 id="what-is-really-happening">What is really happening</h3>
+<p>A copy made by crawling a site is <strong>missing everything that is not visible.</strong></p>
+<ul><li>Server code — the cause of incident 1 above</li><li>Assets that only exist in meta tags, such as <code>og:image</code>. Nothing links to them, so a crawler never sees them</li><li>Unlinked pages that only appear in <code>sitemap.xml</code></li><li>Files referenced inside CSS <code>url()</code></li><li>Convention files such as <code>robots.txt</code>, <code>favicon.ico</code> and <code>site.webmanifest</code></li></ul>
+<p>On the same day, this method <strong>deleted a 511 KB <code>og:image</code>.</strong> It was the share preview for eight pages. What made it worse was that <strong>the domain was returning 200</strong> — CDN caching again. The 404 only showed up against the deployment URL.</p>
+<h3 id="what-i-did">What I did</h3>
+<p>Restored the files from the previous deployment, and wrote the pre-deploy checklist and <strong>"verify against the deployment URL, not the domain"</strong> into the documentation.</p>
+<h3 id="what-the-company-gets">What the company gets</h3>
+<p>It stops things from <strong>quietly disappearing</strong> during a migration, a rebuild, or a change of vendor. The asset nobody noticed was missing is the most expensive one.</p>
+</section>
+<section>
+<h2 id="5-not-letting-someone-else-s-outage-become-ours"><span class="idx">5</span>Not letting someone else's outage become ours</h2>
+<h3 id="the-symptom">The symptom</h3>
+<blockquote>"The photos look broken. They were fine yesterday."</blockquote>
+<h3 id="what-is-really-happening">What is really happening</h3>
+<p>A design showcase site was <strong>hotlinking</strong> every photo directly from a free external image service. When that service had an outage, more than half the images became grey boxes. Nothing in our code changed and the site broke anyway.</p>
+<pre><code>external hotlinks   243 across 24 pages   →  0
+self-hosted         234 files / 217 unique photos / all CC0 (commercial use allowed)
+external image dependency   0</code></pre>
+<h3 id="traps-caught-during-selection">Traps caught during selection</h3>
+<p>You cannot take a free image API at face value. Two things actually caught me out.</p>
+<ul><li><strong>Flat scans</strong> — an image that is only a background reads on screen as a solid grey box. This was the real cause behind "the photos look unfilled"</li><li><strong>Museum collection photography</strong> — it passes as a photograph but does not fit a website example at all. I filtered these by the photographing institution's name</li></ul>
+<h3 id="what-the-company-gets">What the company gets</h3>
+<p><strong>You do not bet the site on something you cannot control.</strong> A free external resource is guaranteed exactly as much as you paid for it.</p>
+</section>
+<section>
+<h2 id="6-finding-the-real-cause-of-this-looks-ai-generated"><span class="idx">6</span>Finding the real cause of "this looks AI-generated"</h2>
+<h3 id="the-symptom">The symptom</h3>
+<blockquote>"Something feels off and I cannot say what." "Someone told us it looks careless."</blockquote>
+<h3 id="what-is-really-happening">What is really happening</h3>
+<p>Usually it is not the content, it is <strong>the fundamentals.</strong> The most common one is Korean breaking mid-word at the end of a line. It gets worse the narrower the screen.</p>
+<blockquote>저희는 사이트를 점검하고 개선<br>합니다</blockquote>
+<p>Before the reader judges the content, they feel <strong>"nobody proofread this."</strong> And that impression carries straight into whether they enquire.</p>
+<p>The cause is one line. Korean does not break at word boundaries by default.</p>
+<pre><code>word-break: keep-all;        /* break only between words */
+overflow-wrap: break-word;   /* exception only for unbreakable long tokens like URLs */</code></pre>
+<p>Using <code>overflow-wrap: anywhere</code> overrides <code>keep-all</code> and the text breaks again. You have to know about this to see it.</p>
+<p>I found and fixed this on all four live sites, and applied it across all <strong>25 showcase pages.</strong></p>
+<h3 id="caught-alongside-it">Caught alongside it</h3>
+<div class="tablewrap"><table><thead><tr><th>Defect</th><th>Why it matters</th></tr></thead><tbody><tr><td>A required field with no indication on screen</td><td>The user fails without knowing why and leaves</td></tr><tr><td>Every error collapsed into one message</td><td>Nobody knows what was actually wrong</td></tr><tr><td>System dark mode producing unintended colours</td><td>The brand falls apart</td></tr><tr><td>Input fields as empty white boxes</td><td>Nobody knows what to put in them</td></tr></tbody></table></div>
+<p>The required-field problem was causing real loss. The server enforced the field, the screen did not mark it, so a user who left it blank <strong>saw only "Something went wrong" with no way to know why.</strong> I moved the check before submission so it says what to fill in.</p>
+<h3 id="what-the-company-gets">What the company gets</h3>
+<p><strong>Conversion.</strong> Good content still does not get an enquiry if the impression is that nobody proofread it.</p>
+</section>
+<section>
+<h2 id="7-checking-whether-something-basic-is-missing"><span class="idx">7</span>Checking whether something basic is missing</h2>
+<h3 id="the-symptom">The symptom</h3>
+<blockquote>"Someone said the address on our business card does not open."</blockquote>
+<h3 id="what-is-really-happening">What is really happening</h3>
+<p>All nine subdomains were alive and <strong>only the root domain was dead.</strong> There was no web record in DNS at all, so it could not be reached.</p>
+<p>Mail worked, so nobody noticed. Anyone typing the company address from a business card, an email signature, or a search result found nothing.</p>
+<h3 id="what-i-did">What I did</h3>
+<p>Sent the root and <code>www</code> to the main site as a <strong>301 permanent redirect</strong>, preserving path and query.</p>
+<pre><code>forblune.com/            → portfolio.forblune.com/
+www.forblune.com/        → portfolio.forblune.com/
+forblune.com/a/b?x=1     → portfolio.forblune.com/a/b?x=1</code></pre>
+<h3 id="the-judgement-call-that-mattered-here">The judgement call that mattered here</h3>
+<p>When attaching domain authentication for outbound mail, I used <strong>a subdomain rather than the root.</strong></p>
+<p>The root already carried Google Workspace mail configuration — MX and SPF. Slotting a new sending service into the root SPF <strong>can break receipt of the company mail currently in use.</strong> Separating it onto a subdomain removes that risk.</p>
+<p>After the work I verified the integrity of the mail records — MX, SPF and DMARC.</p>
+<h3 id="what-the-company-gets">What the company gets</h3>
+<p><strong>You do not break something else on the way to fixing one thing.</strong> That is the whole job when you touch a system that is already running.</p>
+</section>
+<section>
+<h2 id="in-one-line-each">In one line each</h2>
+<div class="tablewrap"><table><thead><tr><th>What the company experiences</th><th>What I do</th></tr></thead><tbody><tr><td>Enquiries stop and nobody knows why</td><td>Find the broken path with a reproducible boundary, restore it, and block recurrence in the deploy procedure</td></tr><tr><td>Outages discovered late</td><td>Add notification and logging structures where failure cannot die silently</td></tr><tr><td>Nobody knows where the current version is</td><td>Establish the source of truth, pin it in the repository, make the deploy one-directional</td></tr><tr><td>Something disappears during a migration or rebuild</td><td>A checklist that includes the assets a crawler never sees</td></tr><tr><td>Someone else's outage stops us</td><td>Remove external dependencies and replace them with resources we control</td></tr><tr><td>Being told it "looks AI-generated"</td><td>Find and fix the fundamentals that erode trust</td></tr><tr><td>Something basic is missing</td><td>Fill in what is absent without breaking what is alive</td></tr></tbody></table></div>
+</section>
+<section>
+<h2 id="how-i-work">How I work</h2>
+<p><strong>I do not fix by guessing.</strong> I first build a reproducible boundary that settles the cause. Is it <code>400</code> or <code>405</code>. Does the hash match or not. I touch the code after that is settled.</p>
+<p><strong>I verify what I fixed.</strong> Code compiling and code working for a user are different things. I submit the form on the real screen, all the way through, and check that the row landed in the database.</p>
+<p><strong>I make sure the same incident cannot happen twice.</strong> I do not stop at the fix. Why it happened and how to check it go into the repository. The next person should not have to be me.</p>
+<p><strong>I write down my own mistakes.</strong> Cases 1 and 4 above are <strong>incidents I caused.</strong> I found them, established the cause, prevented recurrence, and left the record. Nobody avoids incidents entirely. What is needed is someone who does not hide them and blocks them with a system instead.</p>
+</section>
+<section>
+<p><sub>Every number in these cases is a measurement taken on 2026-08-18. The verification commands and evidence remain in the commit messages and <code>docs/</code> of each repository.</sub></p>
+</section>
+</main>
+<footer>
+  <p>Written 2026-08-22. Built from markdown with no framework; the source of this site lives in
+  <a href="https://github.com/forblune/forblune.github.io">the same repository</a>.</p>
+</footer>
+</body>
+</html>
