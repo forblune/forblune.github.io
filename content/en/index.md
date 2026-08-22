@@ -4,7 +4,7 @@ I build for the web, and **I find the parts that broke quietly.**
 
 I write down whether the thing I built **is up right now** — and **what it is not** — in the same table.
 
-[Résumé PDF](/resume.pdf) · [GitHub](https://github.com/forblune) · [geonhee@forblune.com](mailto:geonhee@forblune.com?subject=%5BHiring%5D%20Enquiry)
+[Résumé PDF](/en/resume.pdf) · [GitHub](https://github.com/forblune) · [geonhee@forblune.com](mailto:geonhee@forblune.com?subject=%5BHiring%5D%20Enquiry)
 
 ---
 
