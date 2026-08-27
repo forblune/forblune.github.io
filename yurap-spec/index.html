@@ -10,23 +10,23 @@
 <style>
 :root{
   --ink:#1a1a1c; --sub:#6b6d72; --line:#dfe0e2; --band:#f6f6f7; --paper:#fff;
-  --red:#c8102e; --gold:#a8862f; --ask:#0b6b7a; --ok:#3f6b4a;
+  --red:#c8102e; --gold:#a8862f; --ask:#0b6b7a; --ok:#3f6b4a; --box:#fff; --edge:#c9cacd;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --ink:#eceded; --sub:#9b9da2; --line:#33353a; --band:#1c1e21; --paper:#141517;
-    --red:#e8465e; --gold:#d4b268; --ask:#5fc7d8; --ok:#7fb98d;
+    --red:#e8465e; --gold:#d4b268; --ask:#5fc7d8; --ok:#7fb98d; --box:#f4f4f5; --edge:#8a8c90;
   }
 }
 :root[data-theme="dark"]{
   --ink:#eceded; --sub:#9b9da2; --line:#33353a; --band:#1c1e21; --paper:#141517;
-  --red:#e8465e; --gold:#d4b268; --ask:#5fc7d8; --ok:#7fb98d;
+  --red:#e8465e; --gold:#d4b268; --ask:#5fc7d8; --ok:#7fb98d; --box:#f4f4f5; --edge:#8a8c90;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);
   font-family:"Noto Sans KR",-apple-system,BlinkMacSystemFont,"Malgun Gothic",sans-serif;
   font-weight:350;line-height:1.75;-webkit-text-size-adjust:100%}
-.wrap{max-width:780px;margin:0 auto;padding:30px 20px 76px}
+.wrap{max-width:800px;margin:0 auto;padding:30px 20px 76px}
 header{border-bottom:2px solid var(--ink);padding-bottom:16px;margin-bottom:26px}
 .eyebrow{font-size:11.5px;letter-spacing:.16em;color:var(--sub);font-weight:500;margin:0 0 7px}
 h1{font-size:24px;font-weight:700;margin:0 0 9px;letter-spacing:-.02em;text-wrap:balance}
@@ -35,24 +35,36 @@ h2{font-size:16.5px;font-weight:700;margin:40px 0 5px;letter-spacing:-.01em;
   display:flex;align-items:baseline;gap:9px}
 h2 .n{font-size:11.5px;color:var(--sub);font-weight:500;font-variant-numeric:tabular-nums}
 .note{color:var(--sub);font-size:13.5px;margin:0 0 16px}
+
+.panel{display:flex;gap:20px;align-items:flex-start;border:1px solid var(--line);
+  border-radius:7px;padding:16px 18px;margin:0 0 14px;background:var(--band)}
+.panel .art{flex:none;width:118px}
+.panel .art svg{display:block;width:100%;height:auto;
+  filter:drop-shadow(0 1px 3px rgba(0,0,0,.12))}
+.panel .body{flex:1;min-width:0}
+.panel h3{margin:0 0 2px;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px}
+.panel h3 .num{display:inline-flex;align-items:center;justify-content:center;
+  width:21px;height:21px;border-radius:50%;background:var(--ink);color:var(--paper);
+  font-size:11.5px;font-weight:700;flex:none}
+.panel .role{font-size:12px;color:var(--sub);font-weight:500;margin:0 0 8px}
+ol.seq{margin:0;padding-left:19px;font-size:13.5px}
+ol.seq li{margin:3px 0}
+@media (max-width:520px){
+  .panel{flex-direction:column;align-items:center}
+  .panel .art{width:132px}
+  .panel .body{width:100%}
+}
+
 .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;margin-bottom:8px}
 table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:520px}
 th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
 th{background:var(--band);font-weight:700;font-size:12px;letter-spacing:.02em;white-space:nowrap}
 tr:last-child td{border-bottom:none}
-td.k{font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+td.k{font-weight:700;white-space:nowrap}
 .sw{display:inline-block;width:13px;height:13px;border-radius:3px;vertical-align:-2px;margin-right:7px;
   border:1px solid rgba(128,128,128,.35)}
-.sw-red{background:#c8102e} .sw-blk{background:#000} .sw-gold{background:linear-gradient(135deg,#c9a44c,#8c6d24)}
+.sw-red{background:#c8102e} .sw-blk{background:#111} .sw-gold{background:linear-gradient(135deg,#c9a44c,#8c6d24)}
 .sw-wht{background:#fff}
-.face{border:1px solid var(--line);border-radius:6px;padding:16px 18px;margin:0 0 12px;background:var(--band)}
-.face h3{margin:0 0 4px;font-size:15px;font-weight:700;display:flex;align-items:baseline;gap:8px}
-.face h3 .num{display:inline-flex;align-items:center;justify-content:center;
-  width:21px;height:21px;border-radius:50%;background:var(--ink);color:var(--paper);
-  font-size:11.5px;font-weight:700;flex:none}
-.face .role{font-size:12px;color:var(--sub);font-weight:500}
-ol.seq{margin:10px 0 0;padding-left:20px;font-size:13.5px}
-ol.seq li{margin:3px 0}
 .r{color:var(--red);font-weight:700}
 .g{color:var(--gold);font-weight:700}
 .ask{border-left:3px solid var(--ask);background:var(--band);padding:12px 15px;margin:14px 0;
@@ -70,89 +82,205 @@ footer{margin-top:52px;padding-top:16px;border-top:1px solid var(--line);
 <header>
   <p class="eyebrow">유랍 · 하이드라C3 트리플리셋 50ml · 117형</p>
   <h1>이렇게 이해했습니다</h1>
-  <p class="lede">보내주신 폼클렌저 실물을 기준으로 정리했습니다. 틀린 데가 있으면 번호로 알려주시면 그대로 고치겠습니다.</p>
+  <p class="lede">보내주신 폼클렌저 실물을 기준으로 정리했습니다. 그림은 대략적인 배치입니다. 틀린 데가 있으면 번호로 알려주시면 그대로 고치겠습니다.</p>
 </header>
 
-<h2><span class="n">01</span> 면마다 무엇이 들어가는가</h2>
-<p class="note">몸통 42 × 42mm, 높이 117mm. 전개도 왼쪽부터 1 2 3 4 순서입니다.</p>
-
-<div class="face">
-  <h3><span class="num">1</span> 앞면 <span class="role">원본 그대로</span></h3>
-  <ol class="seq">
-    <li><span class="g">ULAB SWITZERLAND</span> 로고 — 금박, 원본 그대로</li>
-    <li>가로 구분선 — 원본 그대로</li>
-    <li><span class="g">Hydra C3 / TRIPLE RESET</span> — 금박, 원본 그대로</li>
-    <li>가로 구분선 — 원본 그대로</li>
-    <li>작은 검정 영문 — <b>메일로 주신 새 영문으로 교체</b></li>
-    <li><s>Made in Switzerland</s> — <b>제거</b></li>
-  </ol>
+<h2><span class="n">01</span> 전개도 순서</h2>
+<p class="note">몸통 42 × 42mm, 높이 117mm. 왼쪽부터 1 2 3 4입니다.</p>
+<div style="border:1px solid var(--line);border-radius:6px;background:var(--band);padding:18px 12px;margin-bottom:8px">
+<svg viewBox="0 0 340 200" style="display:block;width:100%;height:auto" role="img" aria-label="117형 전개도 면 순서">
+  <g fill="none" stroke="currentColor" stroke-width="1" opacity=".4">
+    <path d="M30 44 h60 v112 h-60 z"/><path d="M90 44 h60 v112 h-60 z"/>
+    <path d="M150 44 h60 v112 h-60 z"/><path d="M210 44 h60 v112 h-60 z"/>
+    <path d="M270 44 h22 v112 h-22 z" stroke-dasharray="3 3"/>
+    <path d="M30 44 q30 -28 60 0"/><path d="M90 44 q30 -28 60 0"/>
+    <path d="M150 44 q30 -28 60 0"/><path d="M210 44 q30 -28 60 0"/>
+    <path d="M30 156 q30 28 60 0"/><path d="M90 156 q30 28 60 0"/>
+    <path d="M150 156 q30 28 60 0"/><path d="M210 156 q30 28 60 0"/>
+  </g>
+  <rect x="90" y="44" width="60" height="112" fill="#c8102e" opacity=".85"/>
+  <g font-family="Noto Sans KR" font-weight="700" text-anchor="middle">
+    <text x="60" y="98" font-size="24" fill="currentColor">1</text>
+    <text x="120" y="98" font-size="24" fill="#fff">2</text>
+    <text x="180" y="98" font-size="24" fill="currentColor">3</text>
+    <text x="240" y="98" font-size="24" fill="currentColor">4</text>
+    <text x="281" y="104" font-size="9" fill="currentColor" opacity=".6">접착</text>
+  </g>
+  <g font-family="Noto Sans KR" font-weight="500" font-size="11" text-anchor="middle">
+    <text x="60" y="118" fill="currentColor" opacity=".7">앞면</text>
+    <text x="120" y="118" fill="#fff" opacity=".9">빨간 면</text>
+    <text x="180" y="118" fill="currentColor" opacity=".7">뒷면</text>
+    <text x="240" y="118" fill="currentColor" opacity=".7">옆면</text>
+    <text x="150" y="26" font-size="10" fill="currentColor" opacity=".7">위 뚜껑 플랩 — ULAB 로고</text>
+    <text x="150" y="192" font-size="10" fill="currentColor" opacity=".7">아래 바닥 플랩</text>
+  </g>
+</svg>
 </div>
 
-<div class="face">
-  <h3><span class="num">2</span> 빨간 면 <span class="role">색만, 글자 없음</span></h3>
-  <ol class="seq"><li>PANTONE 186 C 단색</li></ol>
+<h2><span class="n">02</span> 면마다 어떻게 들어가는가</h2>
+
+<div class="panel">
+  <div class="art">
+  <svg viewBox="0 0 120 268" role="img" aria-label="앞면 배치">
+    <rect x="1" y="1" width="118" height="266" rx="2" fill="var(--box)" stroke="var(--edge)"/>
+    <text x="60" y="72" text-anchor="middle" font-family="Noto Sans KR" font-size="13" font-weight="700" fill="#a8862f">ULAB</text>
+    <text x="60" y="81" text-anchor="middle" font-family="Noto Sans KR" font-size="3.6" letter-spacing="1.6" fill="#a8862f">SWITZERLAND</text>
+    <line x1="24" y1="96" x2="96" y2="96" stroke="#a8862f" stroke-width=".7"/>
+    <text x="60" y="112" text-anchor="middle" font-family="Noto Sans KR" font-size="8.5" fill="#a8862f">Hydra C3</text>
+    <text x="60" y="124" text-anchor="middle" font-family="Noto Sans KR" font-size="8.5" fill="#a8862f">TRIPLE RESET</text>
+    <line x1="24" y1="136" x2="96" y2="136" stroke="#a8862f" stroke-width=".7"/>
+    <text x="60" y="154" text-anchor="middle" font-family="Noto Sans KR" font-size="4.4" font-weight="700" fill="#222">SKIN BARRIER, ELASTICITY</text>
+    <text x="60" y="161" text-anchor="middle" font-family="Noto Sans KR" font-size="4.4" font-weight="700" fill="#222">&amp; AFTER SUN CARE</text>
+    <g stroke="#555" stroke-width="1.1" opacity=".65">
+      <line x1="24" y1="176" x2="96" y2="176"/><line x1="24" y1="182" x2="96" y2="182"/>
+      <line x1="33" y1="188" x2="87" y2="188"/>
+    </g>
+    <text x="60" y="250" text-anchor="middle" font-family="Noto Sans KR" font-size="5" fill="#c8102e" text-decoration="line-through" opacity=".55">Made in Switzerland</text>
+  </svg>
+  </div>
+  <div class="body">
+    <h3><span class="num">1</span> 앞면</h3>
+    <p class="role">원본 그대로 · 흰 바탕</p>
+    <ol class="seq">
+      <li><span class="g">ULAB SWITZERLAND</span> 로고 — 금박, 원본 그대로</li>
+      <li>가로 구분선 — 원본 그대로</li>
+      <li><span class="g">Hydra C3 / TRIPLE RESET</span> — 금박, 원본 그대로</li>
+      <li>가로 구분선 — 원본 그대로</li>
+      <li>작은 검정 영문 — <b>메일로 주신 새 영문으로 교체</b></li>
+      <li><s>Made in Switzerland</s> — <b>제거</b></li>
+    </ol>
+  </div>
 </div>
 
-<div class="face">
-  <h3><span class="num">3</span> 뒷면 <span class="role">한글, 흰 바탕</span></h3>
-  <ol class="seq">
-    <li><span class="r">유랍 / 하이드라C3 트리플리셋 50ml</span> — 빨강, 아래 빨간 밑줄</li>
-    <li><span class="r">사용법</span> — 빨강 제목 / 본문 검정</li>
-    <li>테두리 박스 — 소비자 분쟁 보상 문구 + 고객상담실 1588-2877</li>
-    <li><span class="r">화장품책임판매업자 유랍(ULAB)</span> — 빨강 / 주소는 검정</li>
-    <li>화장품제조업자 + 주소 — 검정</li>
-    <li>제조번호 / 사용기한 별도표기 &nbsp;·&nbsp; 오른쪽 끝에 MADE IN KOREA</li>
-    <li>맨 아래 — 왼쪽에 분리배출 마크(PP), 오른쪽에 바코드</li>
-  </ol>
+<div class="panel">
+  <div class="art">
+  <svg viewBox="0 0 120 268" role="img" aria-label="빨간 면">
+    <rect x="1" y="1" width="118" height="266" rx="2" fill="#c8102e" stroke="var(--edge)"/>
+  </svg>
+  </div>
+  <div class="body">
+    <h3><span class="num">2</span> 빨간 면</h3>
+    <p class="role">색만 · 글자 없음</p>
+    <ol class="seq"><li>PANTONE 186 C 단색</li></ol>
+  </div>
 </div>
 
-<div class="face">
-  <h3><span class="num">4</span> 옆면 <span class="role">한글, 흰 바탕</span></h3>
-  <ol class="seq">
-    <li><span class="r">전성분표</span> — 빨강 제목</li>
-    <li>전성분 본문 — 검정. <b>줄바꿈 없이 이어서 빽빽하게</b></li>
-    <li><span class="r">사용 시의 주의사항</span> — 빨강 제목 / 본문 검정</li>
-  </ol>
+<div class="panel">
+  <div class="art">
+  <svg viewBox="0 0 120 268" role="img" aria-label="뒷면 배치">
+    <rect x="1" y="1" width="118" height="266" rx="2" fill="var(--box)" stroke="var(--edge)"/>
+    <text x="10" y="20" font-family="Noto Sans KR" font-size="5" font-weight="700" fill="#c8102e">유랍 / 하이드라C3 트리플리셋 50ml</text>
+    <line x1="10" y1="24" x2="110" y2="24" stroke="#c8102e" stroke-width=".7"/>
+    <text x="10" y="38" font-family="Noto Sans KR" font-size="5" font-weight="700" fill="#c8102e">사용법</text>
+    <g stroke="#222" stroke-width="1.2" opacity=".7">
+      <line x1="10" y1="46" x2="110" y2="46"/><line x1="10" y1="52" x2="110" y2="52"/>
+      <line x1="10" y1="58" x2="82" y2="58"/>
+    </g>
+    <rect x="10" y="68" width="100" height="26" fill="none" stroke="#555" stroke-width=".6"/>
+    <g stroke="#222" stroke-width="1.1" opacity=".7">
+      <line x1="15" y1="76" x2="105" y2="76"/><line x1="15" y1="82" x2="105" y2="82"/>
+      <line x1="15" y1="88" x2="72" y2="88"/>
+    </g>
+    <text x="10" y="110" font-family="Noto Sans KR" font-size="5" font-weight="700" fill="#c8102e">화장품책임판매업자 유랍(ULAB)</text>
+    <g stroke="#222" stroke-width="1.2" opacity=".7">
+      <line x1="10" y1="118" x2="100" y2="118"/>
+      <line x1="10" y1="132" x2="106" y2="132"/><line x1="10" y1="138" x2="88" y2="138"/>
+      <line x1="10" y1="152" x2="70" y2="152"/>
+    </g>
+    <text x="110" y="153" text-anchor="end" font-family="Noto Sans KR" font-size="4.6" font-weight="700" fill="#222">MADE IN KOREA</text>
+    <g transform="translate(14,224)">
+      <path d="M6 0 L12 10 L0 10 Z" fill="none" stroke="#222" stroke-width="1"/>
+      <text x="6" y="18" text-anchor="middle" font-family="Noto Sans KR" font-size="5" font-weight="700" fill="#222">PP</text>
+    </g>
+    <g fill="#222">
+      <rect x="60" y="222" width="1.4" height="20"/><rect x="63.5" y="222" width="2.6" height="20"/>
+      <rect x="68" y="222" width="1.2" height="20"/><rect x="71" y="222" width="2.2" height="20"/>
+      <rect x="75" y="222" width="1.4" height="20"/><rect x="78.5" y="222" width="2.8" height="20"/>
+      <rect x="83" y="222" width="1.2" height="20"/><rect x="86" y="222" width="2" height="20"/>
+      <rect x="90" y="222" width="1.6" height="20"/><rect x="93.5" y="222" width="2.4" height="20"/>
+      <rect x="98" y="222" width="1.3" height="20"/><rect x="101" y="222" width="2.6" height="20"/>
+    </g>
+  </svg>
+  </div>
+  <div class="body">
+    <h3><span class="num">3</span> 뒷면</h3>
+    <p class="role">한글 · 흰 바탕</p>
+    <ol class="seq">
+      <li><span class="r">유랍 / 하이드라C3 트리플리셋 50ml</span> — 빨강, 아래 빨간 밑줄</li>
+      <li><span class="r">사용법</span> — 빨강 제목, 본문 검정</li>
+      <li>테두리 박스 — 소비자 분쟁 보상 문구 + 고객상담실 1588-2877</li>
+      <li><span class="r">화장품책임판매업자 유랍(ULAB)</span> — 빨강, 주소는 검정</li>
+      <li>화장품제조업자 + 주소 — 검정</li>
+      <li>제조번호 / 사용기한 별도표기 · 오른쪽 끝에 MADE IN KOREA</li>
+      <li>맨 아래 — 왼쪽 분리배출 마크(PP), 오른쪽 바코드</li>
+    </ol>
+  </div>
 </div>
 
-<div class="face">
-  <h3><span class="num">위</span> 뚜껑 플랩</h3>
-  <ol class="seq"><li><span class="g">ULAB</span> 로고 — 금박</li></ol>
+<div class="panel">
+  <div class="art">
+  <svg viewBox="0 0 120 268" role="img" aria-label="옆면 배치">
+    <rect x="1" y="1" width="118" height="266" rx="2" fill="var(--box)" stroke="var(--edge)"/>
+    <text x="10" y="20" font-family="Noto Sans KR" font-size="5.4" font-weight="700" fill="#c8102e">전성분표</text>
+    <g stroke="#222" stroke-width="1.15" opacity=".72">
+      <line x1="10" y1="28" x2="110" y2="28"/><line x1="10" y1="33" x2="110" y2="33"/>
+      <line x1="10" y1="38" x2="110" y2="38"/><line x1="10" y1="43" x2="110" y2="43"/>
+      <line x1="10" y1="48" x2="110" y2="48"/><line x1="10" y1="53" x2="110" y2="53"/>
+      <line x1="10" y1="58" x2="110" y2="58"/><line x1="10" y1="63" x2="110" y2="63"/>
+      <line x1="10" y1="68" x2="110" y2="68"/><line x1="10" y1="73" x2="110" y2="73"/>
+      <line x1="10" y1="78" x2="110" y2="78"/><line x1="10" y1="83" x2="110" y2="83"/>
+      <line x1="10" y1="88" x2="110" y2="88"/><line x1="10" y1="93" x2="110" y2="93"/>
+      <line x1="10" y1="98" x2="110" y2="98"/><line x1="10" y1="103" x2="110" y2="103"/>
+      <line x1="10" y1="108" x2="110" y2="108"/><line x1="10" y1="113" x2="110" y2="113"/>
+      <line x1="10" y1="118" x2="110" y2="118"/><line x1="10" y1="123" x2="110" y2="123"/>
+      <line x1="10" y1="128" x2="110" y2="128"/><line x1="10" y1="133" x2="110" y2="133"/>
+      <line x1="10" y1="138" x2="76" y2="138"/>
+    </g>
+    <text x="10" y="156" font-family="Noto Sans KR" font-size="5.4" font-weight="700" fill="#c8102e">사용 시의 주의사항</text>
+    <g stroke="#222" stroke-width="1.15" opacity=".72">
+      <line x1="10" y1="164" x2="110" y2="164"/><line x1="10" y1="169" x2="110" y2="169"/>
+      <line x1="10" y1="174" x2="110" y2="174"/><line x1="10" y1="179" x2="110" y2="179"/>
+      <line x1="10" y1="184" x2="110" y2="184"/><line x1="10" y1="189" x2="110" y2="189"/>
+      <line x1="10" y1="194" x2="110" y2="194"/><line x1="10" y1="199" x2="110" y2="199"/>
+      <line x1="10" y1="204" x2="110" y2="204"/><line x1="10" y1="209" x2="110" y2="209"/>
+      <line x1="10" y1="214" x2="110" y2="214"/><line x1="10" y1="219" x2="110" y2="219"/>
+      <line x1="10" y1="224" x2="110" y2="224"/><line x1="10" y1="229" x2="110" y2="229"/>
+      <line x1="10" y1="234" x2="62" y2="234"/>
+    </g>
+  </svg>
+  </div>
+  <div class="body">
+    <h3><span class="num">4</span> 옆면</h3>
+    <p class="role">한글 · 흰 바탕</p>
+    <ol class="seq">
+      <li><span class="r">전성분표</span> — 빨강 제목</li>
+      <li>전성분 본문 — 검정. <b>줄바꿈 없이 이어서 빽빽하게</b></li>
+      <li><span class="r">사용 시의 주의사항</span> — 빨강 제목, 본문 검정</li>
+    </ol>
+  </div>
 </div>
 
-<div class="ask"><b>확인 1.</b> MADE IN KOREA를 통화 때는 뒷면 중앙이라고 하셨는데, 폼클렌저 실물은 제조번호 줄 오른쪽 끝에 있습니다. 실물대로 오른쪽 끝에 넣겠습니다. 중앙이 맞으면 알려주세요.</div>
+<div class="ask"><b>확인 1.</b> MADE IN KOREA를 통화 때는 뒷면 중앙이라고 하셨는데, 폼클렌저 실물은 제조번호 줄 오른쪽 끝에 있습니다. 그림처럼 오른쪽 끝에 넣겠습니다. 중앙이 맞으면 알려주세요.</div>
 
-<h2><span class="n">02</span> 색을 어디에 쓰는가</h2>
+<h2><span class="n">03</span> 색을 어디에 쓰는가</h2>
 <div class="tblwrap">
 <table>
 <thead><tr><th>색</th><th>지정</th><th>쓰는 곳</th></tr></thead>
 <tbody>
-<tr>
-  <td class="k"><span class="sw sw-wht"></span>바탕</td>
-  <td>흰색</td>
-  <td>앞면 · 뒷면 · 옆면 전부. <b>색 바탕에 흰 글씨로 빼지 않습니다</b></td>
-</tr>
-<tr>
-  <td class="k"><span class="sw sw-red"></span>빨강</td>
-  <td>PANTONE 186 C 별색</td>
-  <td>2번 면 전체 / 뒷면·옆면의 <b>소제목만</b> — 제품명 줄, 사용법, 전성분표, 사용 시의 주의사항, 화장품책임판매업자 유랍(ULAB)</td>
-</tr>
-<tr>
-  <td class="k"><span class="sw sw-blk"></span>검정</td>
-  <td>K 단색</td>
-  <td>뒷면·옆면 <b>본문 전부</b>, 주소, 제조번호 줄, MADE IN KOREA, 바코드, 분리배출 마크</td>
-</tr>
-<tr>
-  <td class="k"><span class="sw sw-gold"></span>금박</td>
-  <td>원본 지정 그대로</td>
-  <td>앞면 ULAB 로고, 앞면 제품명, 위 뚜껑 로고</td>
-</tr>
+<tr><td class="k"><span class="sw sw-wht"></span>바탕</td><td>흰색</td>
+  <td>앞면 · 뒷면 · 옆면 전부. <b>색 바탕에 흰 글씨로 빼지 않습니다</b></td></tr>
+<tr><td class="k"><span class="sw sw-red"></span>빨강</td><td>PANTONE 186 C 별색</td>
+  <td>2번 면 전체 / 뒷면·옆면의 <b>소제목만</b> — 제품명 줄, 사용법, 전성분표, 사용 시의 주의사항, 화장품책임판매업자 유랍(ULAB)</td></tr>
+<tr><td class="k"><span class="sw sw-blk"></span>검정</td><td>K 단색</td>
+  <td>뒷면·옆면 <b>본문 전부</b>, 주소, 제조번호 줄, MADE IN KOREA, 바코드, 분리배출 마크</td></tr>
+<tr><td class="k"><span class="sw sw-gold"></span>금박</td><td>원본 지정 그대로</td>
+  <td>앞면 ULAB 로고, 앞면 제품명, 위 뚜껑 로고</td></tr>
 </tbody>
 </table>
 </div>
 <p class="note">앞서 회색 별색(Cool Gray 11 C)으로 잡았던 건 <b>검정으로 바꿉니다.</b> 실물이 검정이고, 작은 글씨는 검정 단색이 인쇄에서 안전합니다.</p>
 
-<h2><span class="n">03</span> 글자 크기</h2>
+<h2><span class="n">04</span> 글자 크기</h2>
 <div class="tblwrap">
 <table>
 <tbody>
@@ -163,13 +291,11 @@ footer{margin-top:52px;padding-top:16px;border-top:1px solid var(--line);
 </table>
 </div>
 
-<h2><span class="n">04</span> 아직 확인 못 한 것</h2>
+<h2><span class="n">05</span> 아직 확인 못 한 것</h2>
 <div class="ask"><b>확인 2.</b> 화장품제조업자 상호입니다. 폼클렌저는 <b>(주)에스젤코스메틱</b>(경기 김포시 양촌읍 황금3로 7번길 53)인데, 저희가 받은 트리플리셋 문안에는 <b>삼성엑디코스㈜</b>(경기 화성시 향남읍 제약공단4길 22)로 적혀 있습니다. 다른 제품 상자에는 같은 주소에 <b>삼성메디코스(주)</b>로 되어 있습니다. 트리플리셋은 어디서 만드시는지, 상호를 정확히 알려주시면 그대로 넣겠습니다. 법정 기재사항이라 이것만 확인하고 넘어가겠습니다.</div>
-<ul>
-<li><b>제조번호</b> — 폼클렌저처럼 "별도표기"로 쓰면 되는지</li>
-</ul>
+<ul><li><b>제조번호</b> — 폼클렌저처럼 "별도표기"로 쓰면 되는지</li></ul>
 
-<h2><span class="n">05</span> 이미 반영한 것</h2>
+<h2><span class="n">06</span> 이미 반영한 것</h2>
 <ul>
 <li><span class="done">완료</span> 원본의 <b>MADE IN KORTEA</b> 오타를 KOREA로 수정</li>
 <li><span class="done">완료</span> 바코드를 67%로 축소해 42mm 폭 안에 넣음. EAN-13 표준의 80%라 스캔에 지장 없음</li>
